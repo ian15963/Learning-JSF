@@ -10,6 +10,11 @@
   <description>Gerenciamento de empresas</description>
   
   <dependencies>
+	<dependency>
+	   <groupId>org.jboss.weld.servlet</groupId>
+	   <artifactId>weld-servlet-core</artifactId>
+	   <version>6.0.2.Final</version>
+	</dependency>
   	<dependency>
 	    <groupId>jakarta.faces</groupId>
 	    <artifactId>jakarta.faces-api</artifactId>
