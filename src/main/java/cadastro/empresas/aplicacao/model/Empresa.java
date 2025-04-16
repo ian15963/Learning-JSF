@@ -2,25 +2,26 @@ package cadastro.empresas.aplicacao.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
+
 
 @Entity
-@Table
+@Table(name = "empresa")
 public class Empresa {
 
 	@Id
@@ -28,27 +29,28 @@ public class Empresa {
 	private Long id;
 	
 	@NotBlank
-	@Column(nullable = false, length = 200)
+	@Column(name = "nome_fantasia", nullable = false, length = 200)
 	private String nomeFantasia;
 	
 	@NotBlank
-	@Column(nullable = false, length = 200)
+	@Column(name = "razao_social",nullable = false, length = 200)
 	private String razaoSocial;
 	
-	@Column(nullable = false)
 	@CNPJ
+	@Column(nullable = false)
 	private String cnpj;
 	
-	@Past
 	@NotNull
+	@Column(name = "data_fundacao",nullable = false)
 	private Date dataFundacao;
 
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoEmpresa tipo;
 	
 	@NotNull
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(name = "ramo_atividade_id",nullable = false)
 	private RamoAtividade ramoAtividade;
 
 	public Long getId() {

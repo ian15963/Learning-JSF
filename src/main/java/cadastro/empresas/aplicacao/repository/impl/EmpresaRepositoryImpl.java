@@ -2,11 +2,13 @@ package cadastro.empresas.aplicacao.repository.impl;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+
 
 public class EmpresaRepositoryImpl implements EmpresaRepository{
 	
