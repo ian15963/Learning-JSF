@@ -12,4 +12,8 @@ public enum TipoEmpresa {
 		this.descricao = descricao;
 	}
 	
+	public String getDescricao() {
+		return this.descricao;
+	}
+	
 }

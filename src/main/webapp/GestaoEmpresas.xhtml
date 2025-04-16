@@ -17,23 +17,28 @@
 	</header>
 	
 	<div id="conteudo">
+		
+		<f:metadata>
+			<f:viewAction action="#{empresaBean.listarEmpresas}"/>
+		</f:metadata>
+		
 		<h:form>
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Razão Social" for="razaoSocial" />
-				<h:inputText id="razaoSocial"/>
+				<h:inputText id="razaoSocial" value="#{empresaBean.empresa.razaoSocial}"/>
 				
 				<h:outputLabel value="Nome fantasia" for="nomeFantasia"/>
-				<h:inputText id="nomeFantasia"/>
+				<h:inputText id="nomeFantasia" value="#{empresaBean.empresa.nomeFantasia}"/>
 				
 				<h:outputLabel value="Tipo empresa" for="tipoEmpresa"/>
-				<h:selectOneMenu>
+				<h:selectOneMenu value="#{empresaBean.empresa.tipo}">
 					<f:selectItem itemLabel="Selecione..."/>
-					<f:selectItem itemLabel="MEI" itemValue="MEI"/>
-					<f:selectItem itemLabel="LTDA" itemValue="LTDA"/>
+					<f:selectItems value="#{empresaBean.empresas}"
+						var="tipoEmpresa" itemLabel="#{tipoEmpresa.getDescricao}" itemValue="#{tipoEmpresa}"/>
 				</h:selectOneMenu>
 				
 				<h:outputLabel/>
-				<h:commandButton value="Salvar" />
+				<h:commandButton value="Salvar" actionListener="#{empresaBean.salvar}"/>
 			</h:panelGrid>
 			<h:dataTable value="#{[0,0,0,0]}">
 				

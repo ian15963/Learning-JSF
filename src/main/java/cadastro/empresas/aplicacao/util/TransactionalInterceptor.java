@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-
+import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -12,13 +12,10 @@ import javax.interceptor.InvocationContext;
 
 @Interceptor
 @Transactional
+@Priority(Interceptor.Priority.APPLICATION)
 public class TransactionalInterceptor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	public TransactionalInterceptor() {
-		
-	}
 	
 	@Inject
 	private EntityManager entityManager;

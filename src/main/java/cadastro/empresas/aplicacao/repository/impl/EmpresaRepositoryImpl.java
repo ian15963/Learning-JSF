@@ -2,14 +2,16 @@ package cadastro.empresas.aplicacao.repository.impl;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 
-
+@ApplicationScoped
 public class EmpresaRepositoryImpl implements EmpresaRepository{
 	
 	@Inject
@@ -38,9 +40,15 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 
 	@Override
 	public List<Empresa> search(String razaoSocial) {
-		TypedQuery<Empresa> query = entityManager.createQuery("FROM Empresa e WHERE e.razaoSocial LIKE CONCAT('%', :razaoSocial, '%')", Empresa.class);
-		query.setParameter("nomeEmpresa", razaoSocial);
+		TypedQuery<Empresa> query = entityManager.createQuery("from Empresa WHERE razaoSocial LIKE CONCAT('%', :razaoSocial, '%')", Empresa.class);
+		query.setParameter("razaoSocial", razaoSocial);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Empresa> findAll() {
+		Query query = entityManager.createNativeQuery("select * from empresa", Empresa.class);
+		return (List<Empresa>) query.getResultList();
 	}
 
 }

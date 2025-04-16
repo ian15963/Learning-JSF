@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -42,6 +44,7 @@ public class Empresa {
 	
 	@NotNull
 	@Column(name = "data_fundacao",nullable = false)
+	@Temporal(TemporalType.DATE)
 	private Date dataFundacao;
 
 	@NotNull
