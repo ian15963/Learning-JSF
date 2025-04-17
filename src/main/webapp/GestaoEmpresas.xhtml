@@ -16,6 +16,29 @@
 		</f:metadata>
 		
 		<h:form id="formulario">
+		
+			<p:toolbar>
+				<f:facet name="left">
+					<p:inputText placeholder="Pesquisar..." size="30"/>
+					<p:commandButton value="Pesquisar" icon="fa fa-search" />
+					<span class="ui-separator">
+						<span class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+					<p:commandButton value="Nova" icon="fa fa-plus"/>
+					<span class="ui-separator">
+						<span class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+					<p:commandButton value="Editar" icon="fa fa-edit"/>
+					<p:commandButton value="Excluir" icon="fa fa-trash"/>
+					<span class="ui-separator">
+						<span class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+					<p:commandButton title="Exportar para o Excel" icon="fa fa-file-excel-o" />	
+				</f:facet>
+			</p:toolbar>
+			
+			<p:spacer height="20px" />
+			
 			<h:panelGrid columns="2">
 			
 				<p:outputLabel value="Razão Social" for="razaoSocial" />
