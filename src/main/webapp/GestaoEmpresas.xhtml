@@ -84,8 +84,12 @@
 								 actionListener="#{empresaBean.salvar}"
 								 update="@form tabelaEmpresa"/>
 			</h:panelGrid>
-			<p:dataTable id="tabelaEmpresa" value="#{empresaBean.empresas}"
-						 var="empresa">
+			<p:dataTable id="tabelaEmpresa" 
+						 value="#{empresaBean.empresas}"
+						 var="empresa"
+						 paginator="true"
+						 paginatorPosition="bottom"
+						 rows="1">
 				
 				<p:column headerText="Razão Social">
 					<h:outputText value="#{empresa.razaoSocial}"/>
