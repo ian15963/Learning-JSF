@@ -82,9 +82,9 @@
 				<p:outputLabel/>
 				<p:commandButton value="Salvar" 
 								 actionListener="#{empresaBean.salvar}"
-								 update="@form"/>
+								 update="@form tabelaEmpresa"/>
 			</h:panelGrid>
-			<p:dataTable value="#{empresaBean.empresas}"
+			<p:dataTable id="tabelaEmpresa" value="#{empresaBean.empresas}"
 						 var="empresa">
 				
 				<p:column headerText="Razão Social">

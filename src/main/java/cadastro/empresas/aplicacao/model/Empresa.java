@@ -55,7 +55,6 @@ public class Empresa {
 	@Enumerated(EnumType.STRING)
 	private TipoEmpresa tipo;
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ramo_atividade_id",nullable = false)
 	private RamoAtividade ramoAtividade;

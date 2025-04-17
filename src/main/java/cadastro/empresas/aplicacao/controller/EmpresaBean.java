@@ -3,6 +3,7 @@ package cadastro.empresas.aplicacao.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -36,7 +37,10 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	public void salvar() {
-		this.repository.create(empresa);
+		Empresa savedEmpresa = this.repository.create(empresa);
+		if(Objects.nonNull(empresas) && !empresas.isEmpty()) {
+			empresas.add(savedEmpresa);
+		}
 	}
 	
 	public TipoEmpresa[] getTiposEmpresa() {
