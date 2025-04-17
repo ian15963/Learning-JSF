@@ -22,13 +22,10 @@ public class EmpresaBean implements Serializable{
 	private EmpresaRepository repository;	
 	private List<Empresa> empresas;
 	private Empresa empresa = new Empresa();
+	private String termoPesquisa;
 
 	public void listarEmpresas() {
 		empresas = repository.findAll();
-	}
-	
-	public Empresa getEmpresa() {
-		return empresa;
 	}
 	
 	public List<Empresa> getEmpresas(){
@@ -45,5 +42,22 @@ public class EmpresaBean implements Serializable{
 	public TipoEmpresa[] getTiposEmpresa() {
 		return TipoEmpresa.values();
 	}
+
+	public String getTermoPesquisa() {
+		return termoPesquisa;
+	}
+
+	public void setTermoPesquisa(String termoPesquisa) {
+		this.termoPesquisa = termoPesquisa;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+	
 	
 }
