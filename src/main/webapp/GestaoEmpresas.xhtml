@@ -84,18 +84,23 @@
 								 actionListener="#{empresaBean.salvar}"
 								 update="@form"/>
 			</h:panelGrid>
-			<p:dataTable value="#{[0,0,0,0]}">
+			<p:dataTable value="#{empresaBean.empresas}"
+						 var="empresa">
 				
 				<p:column headerText="Razão Social">
-					<h:outputText value="AlgaWorks Softwares, Treinamentos LDTA"/>
+					<h:outputText value="#{empresa.razaoSocial}"/>
 				</p:column>
 				
 				<p:column headerText="Nome Fantasia">
-					<h:outputText value="AlgaWorks"/>
+					<h:outputText value="#{empresa.nomeFantasia}"/>
 				</p:column>
 				
 				<p:column headerText="Tipo Empresa">
-					<h:outputText value="LTDA"/>
+					<h:outputText value="#{empresa.tipo}"/>
+				</p:column>
+				
+				<p:column headerText="Ramo Atividade">
+					<h:outputText value="#{empresa.ramoAtividade.descricao}"/>
 				</p:column>
 			
 			</p:dataTable>
