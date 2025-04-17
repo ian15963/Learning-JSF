@@ -12,6 +12,7 @@ import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.util.Transactional;
 
+@Transactional
 @ApplicationScoped
 public class EmpresaRepositoryImpl implements EmpresaRepository{
 	
@@ -23,7 +24,6 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 		return entityManager.find(Empresa.class, id);
 	}
 
-	@Transactional
 	@Override
 	public Empresa create(Empresa empresa) {
 		return entityManager.merge(empresa);

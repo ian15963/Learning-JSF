@@ -11,6 +11,7 @@ import javax.inject.Named;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
+import cadastro.empresas.aplicacao.util.CustomFacesMessage;
 
 @Named
 @ViewScoped
@@ -22,14 +23,17 @@ public class EmpresaBean implements Serializable{
 	private EmpresaRepository repository;	
 	private List<Empresa> empresas;
 	private Empresa empresa = new Empresa();
-	private String termoPesquisa;
+	private String razaoSocial;
+	
+	public void pesquisarEmpresa() {
+		empresas = repository.search(razaoSocial);
+		if(empresas.isEmpty()) {
+			CustomFacesMessage.info("Nenhuma empresa encontrada");
+		}
+	}
 
 	public void listarEmpresas() {
 		empresas = repository.findAll();
-	}
-	
-	public List<Empresa> getEmpresas(){
-		return empresas;
 	}
 	
 	public void salvar() {
@@ -43,12 +47,14 @@ public class EmpresaBean implements Serializable{
 		return TipoEmpresa.values();
 	}
 
-	public String getTermoPesquisa() {
-		return termoPesquisa;
+	
+
+	public String getRazaoSocial() {
+		return razaoSocial;
 	}
 
-	public void setTermoPesquisa(String termoPesquisa) {
-		this.termoPesquisa = termoPesquisa;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
 	public Empresa getEmpresa() {
@@ -59,5 +65,8 @@ public class EmpresaBean implements Serializable{
 		this.empresa = empresa;
 	}
 	
+	public List<Empresa> getEmpresas(){
+		return empresas;
+	}
 	
 }
