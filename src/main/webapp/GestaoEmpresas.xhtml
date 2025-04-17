@@ -1,24 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
-<h:head>
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  template="WEB-INF/template/Layout.xhtml">
 
-<meta charset="UTF-8"/>
-<title>Gestão de Empresas</title>
+<ui:define name="titulo">
+	Cadastro de Empresas.
+</ui:define>
 
-<h:outputStylesheet library="empresas" name="estilo.css"/>
-
-</h:head>
-
-<h:body>
-	<header>
-		<h:graphicImage library="empresas" name="logo.png"/>
-	</header>
-	
-	<div id="conteudo">
-		
+<ui:define name="conteudo">
 		<f:metadata>
 			<f:viewAction action="#{empresaBean.listarEmpresas()}"/>
 		</f:metadata>
@@ -89,9 +81,9 @@
 						 var="empresa"
 						 paginator="true"
 						 paginatorPosition="bottom"
-						 rows="1">
+						 rows="10">
 				
-				<p:column headerText="Razão Social">
+				<p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}" >
 					<h:outputText value="#{empresa.razaoSocial}"/>
 				</p:column>
 				
@@ -109,12 +101,6 @@
 			
 			</p:dataTable>
 		</h:form>
-	
-	</div>
+</ui:define>
 
-	<footer>
-		Curso online "JSF" e primefaces essencial.
-	</footer>
-</h:body>
-
-</html>
+</ui:composition>
