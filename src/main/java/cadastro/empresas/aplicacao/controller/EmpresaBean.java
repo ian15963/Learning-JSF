@@ -20,7 +20,7 @@ public class EmpresaBean implements Serializable{
 	
 	@Inject
 	private EmpresaRepository repository;	
-	private List<Empresa> empresas = new ArrayList();
+	private List<Empresa> empresas;
 	private Empresa empresa = new Empresa();
 
 	public void listarEmpresas() {

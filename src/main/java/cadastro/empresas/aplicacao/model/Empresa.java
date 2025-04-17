@@ -1,5 +1,6 @@
 package cadastro.empresas.aplicacao.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -46,6 +47,9 @@ public class Empresa {
 	@Column(name = "data_fundacao",nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataFundacao;
+	
+	@NotNull
+	private BigDecimal faturamento;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -110,6 +114,14 @@ public class Empresa {
 
 	public void setRamoAtividade(RamoAtividade ramoAtividade) {
 		this.ramoAtividade = ramoAtividade;
+	}
+
+	public BigDecimal getFaturamento() {
+		return faturamento;
+	}
+
+	public void setFaturamento(BigDecimal faturamento) {
+		this.faturamento = faturamento;
 	}
 	
 	
