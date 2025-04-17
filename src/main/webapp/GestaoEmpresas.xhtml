@@ -16,21 +16,24 @@
 		</f:metadata>
 		
 		<h:form id="formulario">
-			<p:messages autoUpdate="true"/>
+			<p:messages id="globalMessage"/>
 			<p:toolbar>
 				<f:facet name="left">
-					<p:inputText placeholder="Pesquisar..." size="30" value="#{empresaBean.razaoSocial}"/>
+					<p:inputText id="inputPesquisa" placeholder="Pesquisar..." size="30" value="#{empresaBean.razaoSocial}"/>
 					<p:commandButton value="Pesquisar" 
 									 icon="fa fa-search" 
 									 actionListener="#{empresaBean.pesquisarEmpresa}"
-									 update="tabelaEmpresa"/>
+									 update="tabelaEmpresa globalMessage"
+									 process="@this inputPesquisa"/>
 					<span class="ui-separator">
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
 					<p:commandButton value="Nova" 
-									 icon="fa fa-plus" 
-									 onclick="PF('empresaDialog').show()"
-									 process=""/>
+									 icon="fa fa-plus"
+									 actionListener="#{empresaBean.prepararEmpresa}"
+									 oncomplete="PF('empresaDialog').show()"
+									 process="@this"
+									 update="modal"/>
 					<span class="ui-separator">
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
@@ -50,7 +53,8 @@
 						 var="empresa"
 						 paginator="true"
 						 paginatorPosition="bottom"
-						 rows="10">
+						 rows="10"
+						 emptyMessage="Não há nenhuma empresa">
 				
 				<p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}" >
 					<h:outputText value="#{empresa.razaoSocial}"/>
@@ -76,7 +80,79 @@
 					  modal="true"
 					  resizable="false"
 					  closeOnEscape="true">
-				<p:commandButton value="Teste"/>
+					  
+				<h:panelGrid columns="2" 
+							 id="painelEmpresa"
+							 rendered="#{empresaBean.empresa ne null}">
+					<p:outputLabel value="Razão Social: " for="razaoSocial" />
+					<h:panelGroup>
+						<p:inputText id="razaoSocial" 
+									 value="#{empresaBean.empresa.razaoSocial}" 
+									 required="true"
+									 label="Razão Social"/>
+						<p:message for="razaoSocial"/>
+					</h:panelGroup>
+					
+					<p:outputLabel value="Nome fantasia: " for="nomeFantasia"/>
+					<p:inputText id="nomeFantasia" 
+								 value="#{empresaBean.empresa.nomeFantasia}"/>
+					
+					<h:outputLabel value="Data Fundação: " for="dataFundacao"/>
+					<h:panelGroup>
+						<p:inputText id="dataFundacao" 
+									 value="#{empresaBean.empresa.dataFundacao}"
+									 label="Data fundação"
+									 required="true">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</p:inputText>
+						<p:message for="dataFundacao"/>
+					</h:panelGroup>
+					
+					<p:outputLabel value="Faturamento: " for="faturamento"/>
+					<h:panelGroup>
+						<p:inputText id="faturamento" 
+									 value="#{empresaBean.empresa.faturamento}"
+									 label="Faturamento" >
+							<f:convertNumber pattern="#,##0.00" />
+							<f:validateDoubleRange minimum="0" />
+						</p:inputText>
+						<p:message for="faturamento"/>
+					</h:panelGroup>
+					 
+					<p:outputLabel value="CNPJ: " for="cnpj"/>
+					
+					<h:panelGroup>
+						<p:inputMask id="cnpj" 
+									 value="#{empresaBean.empresa.cnpj}"
+									 label="CNPJ">
+							<f:validateLength minimum="18" maximum="18" />
+						</p:inputMask>
+						<p:message for="cnpj"/>			 
+					</h:panelGroup>
+					
+					<p:outputLabel value="Tipo empresa: " for="tipoEmpresa"/>
+					<p:selectOneMenu id="tipoEmpresa" value="#{empresaBean.empresa.tipo}">
+						<f:selectItem itemLabel="Selecione..."/>
+						<f:selectItems value="#{empresaBean.getTiposEmpresa()}"
+							var="tipoEmpresa" itemLabel="#{tipoEmpresa.getDescricao()}" itemValue="#{tipoEmpresa}"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Ramo Atividade" for="ramoAtividade"/>
+					<p:autoComplete id="ramoAtividade" 
+									size="80"
+									completeMethod="#{empresaBean.completarRamoAtividade}"
+									converter="#{empresaBean.converter}"
+									var="ramoAtividade"
+									itemLabel="#{ramoAtividade.descricao}"
+									itemValue="#{ramoAtividade}"/> 
+					
+					<p:outputLabel/>
+					<p:commandButton value="Salvar" 
+									 actionListener="#{empresaBean.salvar}"
+									 update="tabelaEmpresa painelEmpresa"
+									 oncomplete="PF('empresaDialog').hide()"
+									 process="modal"/>
+				</h:panelGrid>
 			</p:dialog>
 		</h:form>
 </ui:define>
