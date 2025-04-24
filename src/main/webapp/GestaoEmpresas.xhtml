@@ -33,7 +33,9 @@
 									 actionListener="#{empresaBean.prepararEmpresa}"
 									 oncomplete="PF('empresaDialog').show()"
 									 process="@this"
-									 update="modal"/>
+									 update="modal">
+						<p:resetInput target="modal"/>
+					</p:commandButton>
 					<span class="ui-separator">
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
