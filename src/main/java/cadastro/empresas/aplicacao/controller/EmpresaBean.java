@@ -66,7 +66,9 @@ public class EmpresaBean implements Serializable{
 		return TipoEmpresa.values();
 	}
 
-	
+	public boolean isEmpresaSelected() {
+		return Objects.nonNull(empresa) && Objects.nonNull(empresa.getId());
+	}
 
 	public String getRazaoSocial() {
 		return razaoSocial;

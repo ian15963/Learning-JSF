@@ -17,7 +17,7 @@
 		
 		<h:form id="formulario">
 			<p:messages id="globalMessage"/>
-			<p:toolbar>
+			<p:toolbar id="toolbar">
 				<f:facet name="left">
 					<p:inputText id="inputPesquisa" placeholder="Pesquisar..." size="30" value="#{empresaBean.razaoSocial}"/>
 					<p:commandButton value="Pesquisar" 
@@ -39,8 +39,12 @@
 					<span class="ui-separator">
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
-					<p:commandButton value="Editar" icon="fa fa-edit"/>
-					<p:commandButton value="Excluir" icon="fa fa-trash"/>
+					<p:commandButton value="Editar" 
+									 icon="fa fa-edit"
+									 disabled="#{not empresaBean.isEmpresaSelected()}"/>
+					<p:commandButton value="Excluir" 
+									 icon="fa fa-trash"
+									 disabled="#{not empresaBean.isEmpresaSelected()}"/>
 					<span class="ui-separator">
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>
@@ -56,7 +60,13 @@
 						 paginator="true"
 						 paginatorPosition="bottom"
 						 rows="10"
-						 emptyMessage="Não há nenhuma empresa">
+						 emptyMessage="Não há nenhuma empresa"
+						 selectionMode="single"
+						 selection="#{empresaBean.empresa}"
+						 rowKey="#{empresa.id}">
+						 
+				<p:ajax event="rowSelect" update="formulario:toolbar"/>
+				<p:ajax event="rowUnselect" update="formulario:toolbar"/>
 				
 				<p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}" >
 					<h:outputText value="#{empresa.razaoSocial}"/>
@@ -82,9 +92,11 @@
 					  modal="true"
 					  resizable="false"
 					  closeOnEscape="true">
+					  
 				<p:messages id="dialogMessage"/>
 				<p:defaultCommand target="saveEmpresaButton" scope="modal"/>
-				<h:panelGrid columns="2" 
+				
+				<h:panelGrid columns="2"
 							 id="painelEmpresa"
 							 rendered="#{empresaBean.empresa ne null}">
 					<p:outputLabel value="Razão Social: " for="razaoSocial" />
