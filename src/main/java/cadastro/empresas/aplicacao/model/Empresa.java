@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
@@ -44,6 +45,7 @@ public class Empresa {
 	private String cnpj;
 	
 	@NotNull
+	@Past
 	@Column(name = "data_fundacao",nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dataFundacao;

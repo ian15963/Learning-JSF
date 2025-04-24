@@ -25,7 +25,7 @@ public class RamoAtividadeRepositoryImpl implements RamoAtividadeRepository{
 		CriteriaQuery<RamoAtividade> query = cb.createQuery(RamoAtividade.class);
 		Root<RamoAtividade> root = query.from(RamoAtividade.class);
 		query.select(root);
-		query.where(cb.like(cb.upper(root.get("description")), description.toUpperCase() + "%"));
+		query.where(cb.like(cb.upper(root.get("descricao")), description.toUpperCase() + "%"));
 		
 		TypedQuery<RamoAtividade> result =  entityManager.createQuery(query);
 		return result.getResultList();

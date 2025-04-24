@@ -80,7 +80,7 @@
 					  modal="true"
 					  resizable="false"
 					  closeOnEscape="true">
-					  
+				<p:messages id="dialogMessage"/>
 				<h:panelGrid columns="2" 
 							 id="painelEmpresa"
 							 rendered="#{empresaBean.empresa ne null}">
@@ -88,46 +88,41 @@
 					<h:panelGroup>
 						<p:inputText id="razaoSocial" 
 									 value="#{empresaBean.empresa.razaoSocial}" 
-									 required="true"
-									 label="Razão Social"/>
-						<p:message for="razaoSocial"/>
+									 required="true"/>
 					</h:panelGroup>
 					
 					<p:outputLabel value="Nome fantasia: " for="nomeFantasia"/>
-					<p:inputText id="nomeFantasia" 
-								 value="#{empresaBean.empresa.nomeFantasia}"/>
+					<h:panelGroup>
+						<p:inputText id="nomeFantasia" 
+									 required="true"
+									 value="#{empresaBean.empresa.nomeFantasia}"/>
+					</h:panelGroup>
 					
 					<h:outputLabel value="Data Fundação: " for="dataFundacao"/>
 					<h:panelGroup>
-						<p:inputText id="dataFundacao" 
+						<p:calendar id="dataFundacao" 
 									 value="#{empresaBean.empresa.dataFundacao}"
-									 label="Data fundação"
-									 required="true">
-							<f:convertDateTime pattern="dd/MM/yyyy"/>
-						</p:inputText>
-						<p:message for="dataFundacao"/>
+									 required="true"
+									 label="dataFundacao">
+						</p:calendar>
 					</h:panelGroup>
 					
 					<p:outputLabel value="Faturamento: " for="faturamento"/>
 					<h:panelGroup>
 						<p:inputText id="faturamento" 
-									 value="#{empresaBean.empresa.faturamento}"
-									 label="Faturamento" >
+									 value="#{empresaBean.empresa.faturamento}">
 							<f:convertNumber pattern="#,##0.00" />
 							<f:validateDoubleRange minimum="0" />
 						</p:inputText>
-						<p:message for="faturamento"/>
 					</h:panelGroup>
 					 
 					<p:outputLabel value="CNPJ: " for="cnpj"/>
 					
 					<h:panelGroup>
 						<p:inputMask id="cnpj" 
-									 value="#{empresaBean.empresa.cnpj}"
-									 label="CNPJ">
+									 value="#{empresaBean.empresa.cnpj}">
 							<f:validateLength minimum="18" maximum="18" />
-						</p:inputMask>
-						<p:message for="cnpj"/>			 
+						</p:inputMask>		 
 					</h:panelGroup>
 					
 					<p:outputLabel value="Tipo empresa: " for="tipoEmpresa"/>
@@ -149,8 +144,8 @@
 					<p:outputLabel/>
 					<p:commandButton value="Salvar" 
 									 actionListener="#{empresaBean.salvar}"
-									 update="tabelaEmpresa painelEmpresa"
-									 oncomplete="PF('empresaDialog').hide()"
+									 update="tabelaEmpresa painelEmpresa dialogMessage"
+									 oncomplete="if (!args.validationFailed) PF('empresaDialog').hide()"
 									 process="modal"/>
 				</h:panelGrid>
 			</p:dialog>
