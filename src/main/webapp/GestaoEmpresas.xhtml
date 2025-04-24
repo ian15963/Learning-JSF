@@ -83,6 +83,7 @@
 					  resizable="false"
 					  closeOnEscape="true">
 				<p:messages id="dialogMessage"/>
+				<p:defaultCommand target="saveEmpresaButton" scope="modal"/>
 				<h:panelGrid columns="2" 
 							 id="painelEmpresa"
 							 rendered="#{empresaBean.empresa ne null}">
@@ -144,7 +145,8 @@
 									itemValue="#{ramoAtividade}"/> 
 					
 					<p:outputLabel/>
-					<p:commandButton value="Salvar" 
+					<p:commandButton id="saveEmpresaButton"
+									 value="Salvar" 
 									 actionListener="#{empresaBean.salvar}"
 									 update="tabelaEmpresa painelEmpresa dialogMessage"
 									 oncomplete="if (!args.validationFailed) PF('empresaDialog').hide()"
