@@ -2,6 +2,7 @@ package cadastro.empresas.aplicacao.converter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -35,11 +36,9 @@ public class RamoAtividadeConverter implements Converter<RamoAtividade>{
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, RamoAtividade value) {
-		if(Objects.isNull(value)) {
-			return null;
-		}
-		
-		return value.getId().toString();
+		return Optional.ofNullable(value)
+						.map(ramo -> ramo.getId().toString())
+						.orElse(null);
 	}
 
 }

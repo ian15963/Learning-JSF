@@ -96,6 +96,22 @@ public class EmpresaBean implements Serializable{
 					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
 	}
 	
+	public void delete() {
+		this.repository.delete(empresa);
+		
+		if(isRazaoSocialBlank()) {
+			listarEmpresas();
+		}else{
+			pesquisarEmpresa();
+		}
+		
+		CustomFacesMessage.info("Empresa deletada com sucesso!");
+		
+		RequestContext.getCurrentInstance()
+			.update(Arrays
+					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
+	}
+	
 	public void buttonAction() {
 		if(Objects.nonNull(empresa) && Objects.nonNull(empresa.getId())) {
 			this.update();

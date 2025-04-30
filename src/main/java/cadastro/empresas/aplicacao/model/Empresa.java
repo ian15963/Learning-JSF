@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,7 +58,7 @@ public class Empresa {
 	@Enumerated(EnumType.STRING)
 	private TipoEmpresa tipo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ramo_atividade_id",nullable = false)
 	private RamoAtividade ramoAtividade;
 

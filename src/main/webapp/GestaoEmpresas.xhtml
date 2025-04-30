@@ -33,7 +33,7 @@
 									 actionListener="#{empresaBean.prepararEmpresa}"
 									 oncomplete="PF('empresaDialog').show()"
 									 process="@this"
-									 update="modal">
+									 update="modal toolbar">
 						<p:resetInput target="modal"/>
 					</p:commandButton>
 					<span class="ui-separator">
@@ -51,7 +51,14 @@
 									 
 					<p:commandButton value="Excluir" 
 									 icon="fa fa-trash"
-									 disabled="#{not empresaBean.isEmpresaSelected()}"/>
+									 actionListener="#{empresaBean.delete}"
+									 update="modal"
+									 process="@this"
+									 disabled="#{not empresaBean.isEmpresaSelected()}"
+									 >
+						<p:confirm icon="ui-icon-alert" header="Confirmar exclusão da empresa"
+									message="Tem certeza que deseja excluir a empresa?"/>
+					</p:commandButton>
 					<span class="ui-separator">
 						<span class="ui-icon ui-icon-grip-dotted-vertical" />
 					</span>

@@ -36,7 +36,8 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 
 	@Override
 	public void delete(Empresa empresa) {
-		entityManager.remove(empresa);;
+		empresa = findById(empresa.getId());
+		entityManager.remove(empresa);
 	}
 
 	@Override
