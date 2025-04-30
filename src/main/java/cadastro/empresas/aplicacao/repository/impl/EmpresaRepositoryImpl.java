@@ -30,8 +30,7 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 	}
 
 	@Override
-	public Empresa update(Empresa empresa, Long id) {
-		empresa.setId(id);
+	public Empresa update(Empresa empresa) {
 		return entityManager.merge(empresa);
 	}
 

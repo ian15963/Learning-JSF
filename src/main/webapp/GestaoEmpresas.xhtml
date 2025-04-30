@@ -41,7 +41,14 @@
 					</span>
 					<p:commandButton value="Editar" 
 									 icon="fa fa-edit"
-									 disabled="#{not empresaBean.isEmpresaSelected()}"/>
+									 actionListener="#{empresaBean.prepararEdicao}"
+									 disabled="#{not empresaBean.isEmpresaSelected()}"
+									 oncomplete="PF('empresaDialog').show()"
+									 process="@this"
+									 update="modal">
+						<p:resetInput target="modal"/>
+					</p:commandButton>
+									 
 					<p:commandButton value="Excluir" 
 									 icon="fa fa-trash"
 									 disabled="#{not empresaBean.isEmpresaSelected()}"/>
@@ -158,8 +165,9 @@
 					
 					<p:outputLabel/>
 					<p:commandButton id="saveEmpresaButton"
-									 value="Salvar" 
-									 actionListener="#{empresaBean.salvar}"
+									 value="#{empresaBean.empresa.id ne null 
+									 		? 'Editar' : 'Salvar'}" 
+									 actionListener="#{empresaBean.buttonAction()}"
 									 update="tabelaEmpresa painelEmpresa dialogMessage"
 									 oncomplete="if (!args.validationFailed) PF('empresaDialog').hide()"
 									 process="modal"/>

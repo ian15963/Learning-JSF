@@ -1,6 +1,7 @@
 package cadastro.empresas.aplicacao.controller;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,10 @@ import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.context.RequestContext;
+
+import com.mysql.cj.util.StringUtils;
 
 import cadastro.empresas.aplicacao.converter.RamoAtividadeConverter;
 import cadastro.empresas.aplicacao.model.Empresa;
@@ -43,6 +48,10 @@ public class EmpresaBean implements Serializable{
 		empresa = new Empresa();
 	}
 	
+	public void prepararEdicao() {
+		converter = new RamoAtividadeConverter(Arrays.asList(empresa.getRamoAtividade()));
+	}
+	
 	public List<RamoAtividade> completarRamoAtividade(String termo){
 		List<RamoAtividade> ramos = ramoAtividadeRepository.search(termo);
 		
@@ -55,11 +64,48 @@ public class EmpresaBean implements Serializable{
 		empresas = repository.findAll();
 	}
 	
-	public void salvar() {
-		Empresa savedEmpresa = this.repository.create(empresa);
-		if(Objects.nonNull(empresas) && !empresas.isEmpty()) {
-			empresas.add(savedEmpresa);
+	private void salvar() {
+		this.repository.create(empresa);
+		
+		if(isRazaoSocialBlank()) {
+			listarEmpresas();
+		}else{
+			pesquisarEmpresa();
 		}
+		
+		CustomFacesMessage.info("Empresa adicionada com sucesso!");
+		
+		RequestContext.getCurrentInstance()
+			.update(Arrays
+					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
+	}
+	
+	private void update() {
+		this.repository.update(empresa);
+		
+		if(isRazaoSocialBlank()) {
+			listarEmpresas();
+		}else{
+			pesquisarEmpresa();
+		}
+		
+		CustomFacesMessage.info("Empresa atualizada com sucesso!");
+		
+		RequestContext.getCurrentInstance()
+			.update(Arrays
+					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
+	}
+	
+	public void buttonAction() {
+		if(Objects.nonNull(empresa) && Objects.nonNull(empresa.getId())) {
+			this.update();
+		}else {
+			this.salvar();
+		}
+	}
+	
+	private boolean isRazaoSocialBlank() {
+		return StringUtils.isNullOrEmpty(razaoSocial);
 	}
 	
 	public TipoEmpresa[] getTiposEmpresa() {

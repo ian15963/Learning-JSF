@@ -9,7 +9,7 @@ public interface EmpresaRepository {
 	List<Empresa> findAll();
 	Empresa findById(Long id);
 	Empresa create(Empresa empresa);
-	Empresa update(Empresa empresa, Long id);
+	Empresa update(Empresa empresa);
 	void delete(Empresa empresa);
 	List<Empresa> search(String razaoSocial);
 
