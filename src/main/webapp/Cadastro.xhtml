@@ -13,19 +13,33 @@
 <ui:define name="conteudo">
 	
 	<h:form class="container">
-		<div class="login">
+		<div class="cadastro">
 			<h2>Cadastro</h2>
-			<div class="login_field">
+			<div class="cadastro_field">
+				<p:outputLabel value="Nome:" for="name" />
+				<h:panelGroup>
+					<p:inputText id="name"
+								 required="true"/>
+				</h:panelGroup>
+			</div>
+			<div class="cadastro_field">
 				<p:outputLabel value="E-mail:" for="username" />
 				<h:panelGroup>
 					<p:inputText id="username"
 								 required="true"/>
 				</h:panelGroup>
 			</div>
-			<div class="login_field">
+			<div class="cadastro_field">
 				<p:outputLabel value="Senha:" for="password"/>
 				<h:panelGroup>
 					<p:inputText id="password"
+								 required="true"/>
+				</h:panelGroup>
+			</div>
+			<div class="cadastro_field">
+				<p:outputLabel value="Confirmar Senha" for="confirm-password"/>
+				<h:panelGroup>
+					<p:inputText id="confirm-password"
 								 required="true"/>
 				</h:panelGroup>
 			</div>
