@@ -12,13 +12,31 @@
 
 <ui:define name="conteudo">
 
-	<div class="container">
+	<h:form class="container">
 		<div class="login">
-			<p:outputLabel value="Nome de usuário" for="username" />
-			<p:inputText id="username"/>
-			
+			<h2>Login</h2>
+			<div class="login_field">
+				<p:outputLabel value="E-mail:" for="username" />
+				<h:panelGroup>
+					<p:inputText id="username"
+								 required="true"/>
+				</h:panelGroup>
+			</div>
+			<div class="login_field">
+				<p:outputLabel value="Senha:" for="password"/>
+				<h:panelGroup>
+					<p:inputText id="password"
+								 required="true"/>
+				</h:panelGroup>
+			</div>
+			<p:button value="Entrar"/>
+			<div>
+				<span>Não possui conta? </span>
+				<p:commandLink value="Cadastre-se" 
+							   action="cadastro"/>
+			</div>
 		</div>
-	</div>
+	</h:form>
 
 </ui:define>
 
