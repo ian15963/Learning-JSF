@@ -7,7 +7,7 @@
   <display-name>aplicacao</display-name>
   
   	<welcome-file-list>
-		<welcome-file>GestaoEmpresas.xhtml</welcome-file>
+		<welcome-file>Login.xhtml</welcome-file>
 	</welcome-file-list>
 	
 	<context-param>

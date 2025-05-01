@@ -5,16 +5,16 @@
 	  xmlns:p="http://primefaces.org/ui"
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  template="WEB-INF/template/Layout.xhtml">
-
+	  
 <ui:define name="head">
-	<h:outputStylesheet library="login" name="login.css"/>
+	<h:outputStylesheet library="cadastro" name="cadastro.css"/>
 </ui:define>
 
 <ui:define name="conteudo">
-
+	
 	<h:form class="container">
 		<div class="login">
-			<h2>Login</h2>
+			<h2>Cadastro</h2>
 			<div class="login_field">
 				<p:outputLabel value="E-mail:" for="username" />
 				<h:panelGroup>
@@ -32,8 +32,8 @@
 			<p:button value="Entrar"/>
 			<div>
 				<span>Não possui conta? </span>
-				<h:link value="Cadastre-se" 
-							   outcome="Cadastro"/>
+				<p:commandLink value="Cadastre-se" 
+							   action="cadastro"/>
 			</div>
 		</div>
 	</h:form>
