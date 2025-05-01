@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 70%;
+	width: 100%;
+}
+
+.login{
+	height: 2rem;
+	background-color: #545454;
+	
+}
