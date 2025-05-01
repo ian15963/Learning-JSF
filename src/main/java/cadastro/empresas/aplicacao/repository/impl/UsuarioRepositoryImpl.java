@@ -7,7 +7,9 @@ import javax.persistence.TypedQuery;
 
 import cadastro.empresas.aplicacao.model.Usuario;
 import cadastro.empresas.aplicacao.repository.UsuarioRepository;
+import cadastro.empresas.aplicacao.util.Transactional;
 
+@Transactional
 @ApplicationScoped
 public class UsuarioRepositoryImpl implements UsuarioRepository{
 

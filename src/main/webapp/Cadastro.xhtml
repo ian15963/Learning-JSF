@@ -19,35 +19,40 @@
 				<p:outputLabel value="Nome:" for="name" />
 				<h:panelGroup>
 					<p:inputText id="name"
-								 required="true"/>
+								 required="true"
+								 value="#{usuarioBean.usuarioDto.name}"/>
 				</h:panelGroup>
 			</div>
 			<div class="cadastro_field">
 				<p:outputLabel value="E-mail:" for="username" />
 				<h:panelGroup>
 					<p:inputText id="username"
-								 required="true"/>
+								 required="true"
+								 value="#{usuarioBean.usuarioDto.username}"/>
 				</h:panelGroup>
 			</div>
 			<div class="cadastro_field">
 				<p:outputLabel value="Senha:" for="password"/>
 				<h:panelGroup>
-					<p:inputText id="password"
-								 required="true"/>
+					<p:password id="password"
+								 required="true"
+								 value="#{usuarioBean.usuarioDto.password}"/>
 				</h:panelGroup>
 			</div>
 			<div class="cadastro_field">
 				<p:outputLabel value="Confirmar Senha" for="confirm-password"/>
 				<h:panelGroup>
-					<p:inputText id="confirm-password"
-								 required="true"/>
+					<p:password id="confirm-password"
+								 required="true"
+								 value="#{usuarioBean.usuarioDto.confirmPassword}"/>
 				</h:panelGroup>
 			</div>
-			<p:button value="Entrar"/>
+			<p:commandButton value="Entrar"
+							 actionListener="#{usuarioBean.createUser}"/>
 			<div>
-				<span>Não possui conta? </span>
-				<p:commandLink value="Cadastre-se" 
-							   action="cadastro"/>
+				<span>Já possui uma conta? </span>
+				<p:link value="Faça login" 
+							   outcome="Login"/>
 			</div>
 		</div>
 	</h:form>

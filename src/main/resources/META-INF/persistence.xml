@@ -6,6 +6,7 @@
 	<persistence-unit name="cadastroEmpresas">
 		<class>cadastro.empresas.aplicacao.model.Empresa</class>
 		<class>cadastro.empresas.aplicacao.model.RamoAtividade</class>
+		<class>cadastro.empresas.aplicacao.model.Usuario</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/cadastro_empresas" />
 			<property name="javax.persistence.jdbc.user" value="root" />

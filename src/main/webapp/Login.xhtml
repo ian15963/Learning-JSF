@@ -19,21 +19,24 @@
 				<p:outputLabel value="E-mail:" for="username" />
 				<h:panelGroup>
 					<p:inputText id="username"
-								 required="true"/>
+								 required="true"
+								 value="#{usuarioAutenticadoBean.usuarioDto.username}"/>
 				</h:panelGroup>
 			</div>
 			<div class="login_field">
 				<p:outputLabel value="Senha:" for="password"/>
 				<h:panelGroup>
-					<p:inputText id="password"
-								 required="true"/>
+					<p:password id="password"
+								 required="true"
+								 value="#{usuarioAutenticadoBean.usuarioDto.password}"/>
 				</h:panelGroup>
 			</div>
-			<p:button value="Entrar"/>
+			<p:commandButton value="Entrar"
+							 actionListener="#{usuarioAutenticadoBean.authenticate}"/>
 			<div>
 				<span>Não possui conta? </span>
 				<h:link value="Cadastre-se" 
-							   outcome="Cadastro"/>
+						outcome="Cadastro"/>
 			</div>
 		</div>
 	</h:form>
