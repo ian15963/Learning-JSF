@@ -10,13 +10,13 @@ public class UsuarioBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String email;
-	private Boolean isAuthenticated;
+	private boolean isAuthenticated;
 	
 	public UsuarioBean() {
 		
 	}
 	
-	public UsuarioBean(String email, Boolean isAuthenticated) {
+	public UsuarioBean(String email, boolean isAuthenticated) {
 		super();
 		this.email = email;
 		this.isAuthenticated = isAuthenticated;
@@ -30,7 +30,7 @@ public class UsuarioBean implements Serializable{
 		this.email = email;
 	}
 	
-	public Boolean isAuthenticated() {
+	public boolean isAuthenticated() {
 		return isAuthenticated;
 	}
 	

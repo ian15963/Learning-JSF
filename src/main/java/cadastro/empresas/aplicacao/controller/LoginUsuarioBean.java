@@ -28,7 +28,8 @@ public class LoginUsuarioBean implements Serializable{
 		Usuario usuario = UsuarioMapper.toEntity(usuarioDto);
 		service.authenticate(usuario);
 		
-		usuarioAuthenticated = new UsuarioBean(usuario.getUsername(), true);
+		usuarioAuthenticated.setEmail(usuario.getUsername());
+		usuarioAuthenticated.setIsAuthenticated(true);
 		RedirectUtils.redirectToPage("GestaoEmpresas.xhtml");
 	}
 
