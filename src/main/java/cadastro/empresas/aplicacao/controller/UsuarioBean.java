@@ -1,42 +1,43 @@
 package cadastro.empresas.aplicacao.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 
-import cadastro.empresas.aplicacao.dto.UsuarioDto;
-import cadastro.empresas.aplicacao.mapper.UsuarioMapper;
-import cadastro.empresas.aplicacao.model.Usuario;
-import cadastro.empresas.aplicacao.service.UsuarioService;
-import cadastro.empresas.aplicacao.util.RedirectUtils;
-
-@Named
-@ViewScoped
+@SessionScoped
 public class UsuarioBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
-	@Inject
-	private UsuarioService service;
-	private UsuarioDto usuarioDto = new UsuarioDto();
 	
-	public void createUser() {
-		Usuario usuario = UsuarioMapper.toEntity(usuarioDto);
-		service.createUser(usuario);
-		RedirectUtils.redirectToPage("Login.xhtml");
+	private String email;
+	private Boolean isAuthenticated;
+	
+	public UsuarioBean() {
+		
+	}
+	
+	public UsuarioBean(String email, Boolean isAuthenticated) {
+		super();
+		this.email = email;
+		this.isAuthenticated = isAuthenticated;
 	}
 
-	public UsuarioDto getUsuarioDto() {
-		return usuarioDto;
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public Boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+	
+	public void setIsAuthenticated(Boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
 	}
 
-	public void setUsuarioDto(UsuarioDto usuarioDto) {
-		this.usuarioDto = usuarioDto;
-	}
 	
 	
 }

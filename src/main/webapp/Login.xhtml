@@ -20,7 +20,7 @@
 				<h:panelGroup>
 					<p:inputText id="username"
 								 required="true"
-								 value="#{usuarioAutenticadoBean.usuarioDto.username}"/>
+								 value="#{loginUsuarioBean.usuarioDto.username}"/>
 				</h:panelGroup>
 			</div>
 			<div class="login_field">
@@ -28,11 +28,11 @@
 				<h:panelGroup>
 					<p:password id="password"
 								 required="true"
-								 value="#{usuarioAutenticadoBean.usuarioDto.password}"/>
+								 value="#{loginUsuarioBean.usuarioDto.password}"/>
 				</h:panelGroup>
 			</div>
 			<p:commandButton value="Entrar"
-							 actionListener="#{usuarioAutenticadoBean.authenticate}"/>
+							 actionListener="#{loginUsuarioBean.authenticate}"/>
 			<div>
 				<span>Não possui conta? </span>
 				<h:link value="Cadastre-se" 

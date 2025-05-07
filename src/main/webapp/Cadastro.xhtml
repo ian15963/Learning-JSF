@@ -20,7 +20,7 @@
 				<h:panelGroup>
 					<p:inputText id="name"
 								 required="true"
-								 value="#{usuarioBean.usuarioDto.name}"/>
+								 value="#{cadastroUsuarioBean.usuarioDto.name}"/>
 				</h:panelGroup>
 			</div>
 			<div class="cadastro_field">
@@ -28,7 +28,7 @@
 				<h:panelGroup>
 					<p:inputText id="username"
 								 required="true"
-								 value="#{usuarioBean.usuarioDto.username}"/>
+								 value="#{cadastroUsuarioBean.usuarioDto.username}"/>
 				</h:panelGroup>
 			</div>
 			<div class="cadastro_field">
@@ -36,7 +36,7 @@
 				<h:panelGroup>
 					<p:password id="password"
 								 required="true"
-								 value="#{usuarioBean.usuarioDto.password}"/>
+								 value="#{cadastroUsuarioBean.usuarioDto.password}"/>
 				</h:panelGroup>
 			</div>
 			<div class="cadastro_field">
@@ -44,11 +44,11 @@
 				<h:panelGroup>
 					<p:password id="confirm-password"
 								 required="true"
-								 value="#{usuarioBean.usuarioDto.confirmPassword}"/>
+								 value="#{cadastroUsuarioBean.usuarioDto.confirmPassword}"/>
 				</h:panelGroup>
 			</div>
 			<p:commandButton value="Entrar"
-							 actionListener="#{usuarioBean.createUser}"/>
+							 actionListener="#{cadastroUsuarioBean.createUser}"/>
 			<div>
 				<span>Já possui uma conta? </span>
 				<p:link value="Faça login" 
