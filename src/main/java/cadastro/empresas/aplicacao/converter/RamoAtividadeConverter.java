@@ -8,19 +8,20 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
+import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 
-public class RamoAtividadeConverter implements Converter<RamoAtividade>{
+public class RamoAtividadeConverter implements Converter<RamoAtividadeDto>{
 
-	private List<RamoAtividade> ramos;
+	private List<RamoAtividadeDto> ramos;
 	
-	public RamoAtividadeConverter(List<RamoAtividade> ramos) {
+	public RamoAtividadeConverter(List<RamoAtividadeDto> ramos) {
 		super();
 		this.ramos = ramos;
 	}
 
 	@Override
-	public RamoAtividade getAsObject(FacesContext context, UIComponent component, String value) {
+	public RamoAtividadeDto getAsObject(FacesContext context, UIComponent component, String value) {
 		if(Objects.isNull(value)) {
 			return null;
 		}
@@ -35,7 +36,7 @@ public class RamoAtividadeConverter implements Converter<RamoAtividade>{
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component, RamoAtividade value) {
+	public String getAsString(FacesContext context, UIComponent component, RamoAtividadeDto value) {
 		return Optional.ofNullable(value)
 						.map(ramo -> ramo.getId().toString())
 						.orElse(null);

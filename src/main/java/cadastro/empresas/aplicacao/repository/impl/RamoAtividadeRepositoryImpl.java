@@ -2,6 +2,7 @@ package cadastro.empresas.aplicacao.repository.impl;
 
 import java.util.List;
 
+import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 
@@ -20,14 +21,17 @@ public class RamoAtividadeRepositoryImpl implements RamoAtividadeRepository{
 	private EntityManager entityManager;
 	
 	@Override
-	public List<RamoAtividade> search(String description) {
+	public List<RamoAtividadeDto> search(String description) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<RamoAtividade> query = cb.createQuery(RamoAtividade.class);
+		CriteriaQuery<RamoAtividadeDto> query = cb.createQuery(RamoAtividadeDto.class);
 		Root<RamoAtividade> root = query.from(RamoAtividade.class);
-		query.select(root);
+		
+		query.select(cb.construct(RamoAtividadeDto.class,
+				root.get("id"),
+				root.get("descricao")));
 		query.where(cb.like(cb.upper(root.get("descricao")), description.toUpperCase() + "%"));
 		
-		TypedQuery<RamoAtividade> result =  entityManager.createQuery(query);
+		TypedQuery<RamoAtividadeDto> result = entityManager.createQuery(query);
 		return result.getResultList();
 	}
 

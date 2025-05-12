@@ -1,5 +1,8 @@
 package cadastro.empresas.aplicacao.dto;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
 
@@ -8,9 +11,16 @@ public class EmpresaDto {
 	private Long id;
 	private String razaoSocial;
 	private String nomeFantasia;
+	private String cnpj;
+	private Date dataFundacao;
+	private BigDecimal faturamento;
 	private TipoEmpresa tipo;
 	private RamoAtividadeDto ramoAtividade;
 	
+	public EmpresaDto() {
+		super();
+	}
+
 	public EmpresaDto(Long id, String razaoSocial, String nomeFantasia, TipoEmpresa tipo, RamoAtividade ramoAtividade) {
 		super();
 		this.id = id;
@@ -36,7 +46,29 @@ public class EmpresaDto {
 		this.tipo = tipo;
 	}
 
+	public String getCnpj() {
+		return cnpj;
+	}
 
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public Date getDataFundacao() {
+		return dataFundacao;
+	}
+
+	public void setDataFundacao(Date dataFundacao) {
+		this.dataFundacao = dataFundacao;
+	}
+
+	public BigDecimal getFaturamento() {
+		return faturamento;
+	}
+
+	public void setFaturamento(BigDecimal faturamento) {
+		this.faturamento = faturamento;
+	}
 
 	public String getRazaoSocial() {
 		return razaoSocial;
@@ -52,14 +84,6 @@ public class EmpresaDto {
 
 	public void setNomeFantasia(String nomeFantasia) {
 		this.nomeFantasia = nomeFantasia;
-	}
-
-	public TipoEmpresa getTipoEmpresa() {
-		return tipo;
-	}
-
-	public void setTipoEmpresa(TipoEmpresa tipo) {
-		this.tipo = tipo;
 	}
 
 	public RamoAtividadeDto getRamoAtividade() {

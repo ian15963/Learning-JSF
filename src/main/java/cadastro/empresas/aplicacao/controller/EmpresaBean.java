@@ -16,6 +16,8 @@ import com.mysql.cj.util.StringUtils;
 
 import cadastro.empresas.aplicacao.converter.RamoAtividadeConverter;
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
+import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
+import cadastro.empresas.aplicacao.mapper.EmpresaMapper;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
@@ -35,9 +37,9 @@ public class EmpresaBean implements Serializable{
 	@Inject
 	private RamoAtividadeRepository ramoAtividadeRepository;
 	private List<EmpresaDto> empresas;
-	private Empresa empresa;
+	private EmpresaDto empresa;
 	private String razaoSocial;
-	private Converter<RamoAtividade> converter;
+	private Converter<RamoAtividadeDto> converter;
 	
 	public void pesquisarEmpresa() {
 		empresas = repository.search(razaoSocial);
@@ -47,15 +49,17 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	public void prepararEmpresa() {
-		empresa = new Empresa();
+		empresa = new EmpresaDto();
 	}
 	
 	public void prepararEdicao() {
+		Empresa entity = repository.findById(empresa.getId());
+		empresa = EmpresaMapper.toDto(entity);
 		converter = new RamoAtividadeConverter(Arrays.asList(empresa.getRamoAtividade()));
 	}
 	
-	public List<RamoAtividade> completarRamoAtividade(String termo){
-		List<RamoAtividade> ramos = ramoAtividadeRepository.search(termo);
+	public List<RamoAtividadeDto> completarRamoAtividade(String termo){
+		List<RamoAtividadeDto> ramos = ramoAtividadeRepository.search(termo);
 		
 		converter = new RamoAtividadeConverter(ramos);
 		
@@ -69,7 +73,8 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	private void salvar() {
-		this.repository.create(empresa);
+		Empresa entity = EmpresaMapper.toEntity(empresa);
+		this.repository.create(entity);
 		
 		if(isRazaoSocialBlank()) {
 			listarEmpresas();
@@ -85,7 +90,8 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	private void update() {
-		this.repository.update(empresa);
+		Empresa entity = EmpresaMapper.toEntity(empresa);
+		this.repository.update(entity);
 		
 		if(isRazaoSocialBlank()) {
 			listarEmpresas();
@@ -101,7 +107,8 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	public void delete() {
-		this.repository.delete(empresa);
+		Empresa entity = EmpresaMapper.toEntity(empresa);
+		this.repository.delete(entity);
 		
 		if(isRazaoSocialBlank()) {
 			listarEmpresas();
@@ -144,11 +151,11 @@ public class EmpresaBean implements Serializable{
 		this.razaoSocial = razaoSocial;
 	}
 
-	public Empresa getEmpresa() {
+	public EmpresaDto getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(Empresa empresa) {
+	public void setEmpresa(EmpresaDto empresa) {
 		this.empresa = empresa;
 	}
 	

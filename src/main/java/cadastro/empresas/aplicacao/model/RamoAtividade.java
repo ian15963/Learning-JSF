@@ -8,6 +8,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
+
 @Entity
 @Table(name = "ramo_atividade")
 public class RamoAtividade {
@@ -18,6 +20,14 @@ public class RamoAtividade {
 	
 	@NotBlank
 	private String descricao;
+	
+	public RamoAtividade() {	
+	}
+	
+	public RamoAtividade(RamoAtividadeDto dto) {
+		this.id = dto.getId();
+		this.descricao = dto.getDescricao();
+	}
 
 	public Long getId() {
 		return id;
