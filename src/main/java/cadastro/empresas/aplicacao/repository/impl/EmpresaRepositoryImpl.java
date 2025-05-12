@@ -5,9 +5,9 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.util.Transactional;
@@ -41,16 +41,31 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 	}
 
 	@Override
-	public List<Empresa> search(String razaoSocial) {
-		TypedQuery<Empresa> query = entityManager.createQuery("from Empresa WHERE razaoSocial LIKE CONCAT('%', :razaoSocial, '%')", Empresa.class);
+	public List<EmpresaDto> search(String razaoSocial) {
+		TypedQuery<EmpresaDto> query = entityManager.createQuery("SELECT "
+				+ "new cadastro.empresas.aplicacao.dto.EmpresaDto("
+				+ "e.id,"
+				+ "e.razaoSocial,"
+				+ "e.nomeFantasia,"
+				+ "e.tipoEmpresa,"
+				+ "new cadastro.empresas.aplicacao.dto.RamoAtividadeDto(e.ramoAtividade))"
+				+ " FROM Empresa e WHERE e.razaoSocial LIKE CONCAT('%', :razaoSocial, '%')", EmpresaDto.class);
 		query.setParameter("razaoSocial", razaoSocial);
 		return query.getResultList();
 	}
 
 	@Override
-	public List<Empresa> findAll() {
-		Query query = entityManager.createNativeQuery("select * from empresa", Empresa.class);
-		return (List<Empresa>) query.getResultList();
+	public List<EmpresaDto> findAll() {
+		TypedQuery<EmpresaDto> query = entityManager
+				.createQuery("SELECT new cadastro.empresas.aplicacao.dto.EmpresaDto("
+						+ "e.id,"
+						+ "e.razaoSocial,"
+						+ "e.nomeFantasia,"
+						+ "e.tipo,"
+						+ "e.ramoAtividade) "
+						+ "FROM Empresa e", 
+						EmpresaDto.class);
+		return query.getResultList();
 	}
 
 }

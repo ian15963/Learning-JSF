@@ -31,4 +31,10 @@ public class RamoAtividadeRepositoryImpl implements RamoAtividadeRepository{
 		return result.getResultList();
 	}
 
+	@Override
+	public List<RamoAtividade> findAll() {
+		TypedQuery<RamoAtividade> query = entityManager.createQuery("FROM RamoAtividade", RamoAtividade.class);
+		return query.getResultList();
+	}
+
 }

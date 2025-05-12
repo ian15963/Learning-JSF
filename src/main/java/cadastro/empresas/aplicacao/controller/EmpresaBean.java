@@ -15,12 +15,14 @@ import org.primefaces.context.RequestContext;
 import com.mysql.cj.util.StringUtils;
 
 import cadastro.empresas.aplicacao.converter.RamoAtividadeConverter;
+import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 import cadastro.empresas.aplicacao.util.CustomFacesMessage;
+import cadastro.empresas.aplicacao.util.Transactional;
 
 @Named
 @ViewScoped
@@ -32,7 +34,7 @@ public class EmpresaBean implements Serializable{
 	private EmpresaRepository repository;
 	@Inject
 	private RamoAtividadeRepository ramoAtividadeRepository;
-	private List<Empresa> empresas;
+	private List<EmpresaDto> empresas;
 	private Empresa empresa;
 	private String razaoSocial;
 	private Converter<RamoAtividade> converter;
@@ -59,8 +61,10 @@ public class EmpresaBean implements Serializable{
 		
 		return ramos;
 	}
-
+	
+	@Transactional
 	public void listarEmpresas() {
+		ramoAtividadeRepository.findAll();
 		empresas = repository.findAll();
 	}
 	
@@ -148,7 +152,7 @@ public class EmpresaBean implements Serializable{
 		this.empresa = empresa;
 	}
 	
-	public List<Empresa> getEmpresas(){
+	public List<EmpresaDto> getEmpresas(){
 		return empresas;
 	}
 
