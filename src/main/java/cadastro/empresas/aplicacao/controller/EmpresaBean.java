@@ -3,14 +3,18 @@ package cadastro.empresas.aplicacao.controller;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import javax.annotation.PostConstruct;
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 
 import com.mysql.cj.util.StringUtils;
 
@@ -19,10 +23,10 @@ import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
 import cadastro.empresas.aplicacao.mapper.EmpresaMapper;
 import cadastro.empresas.aplicacao.model.Empresa;
-import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
+import cadastro.empresas.aplicacao.service.EmpresaService;
 import cadastro.empresas.aplicacao.util.CustomFacesMessage;
 import cadastro.empresas.aplicacao.util.Transactional;
 
@@ -36,16 +40,32 @@ public class EmpresaBean implements Serializable{
 	private EmpresaRepository repository;
 	@Inject
 	private RamoAtividadeRepository ramoAtividadeRepository;
-	private List<EmpresaDto> empresas;
+	@Inject
+	private EmpresaService empresaService;
+	private LazyDataModel<EmpresaDto> empresas;
 	private EmpresaDto empresa;
 	private String razaoSocial;
 	private Converter<RamoAtividadeDto> converter;
 	
+	private LazyDataModel<EmpresaDto> createLazyDataModel(){
+		return new LazyDataModel<EmpresaDto>() {
+			private static final long serialVersionUID = 710412098474697979L;
+			
+			public List<EmpresaDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List<EmpresaDto> data = empresaService.fetchEmpresas(first, pageSize, sortField, sortOrder, filters);
+                int total = repository.totalElements();
+
+                this.setRowCount(total);
+                return data;
+            }
+        };
+	}
+	
 	public void pesquisarEmpresa() {
-		empresas = repository.search(razaoSocial);
-		if(empresas.isEmpty()) {
-			CustomFacesMessage.info("Nenhuma empresa encontrada");
-		}
+//		empresas = createrepository.search(razaoSocial);
+//		if(empresas.isEmpty()) {
+//			CustomFacesMessage.info("Nenhuma empresa encontrada");
+//		}
 	}
 	
 	public void prepararEmpresa() {
@@ -66,10 +86,8 @@ public class EmpresaBean implements Serializable{
 		return ramos;
 	}
 	
-	@Transactional
 	public void listarEmpresas() {
-		ramoAtividadeRepository.findAll();
-		empresas = repository.findAll();
+		empresas = createLazyDataModel();
 	}
 	
 	private void salvar() {
@@ -157,9 +175,9 @@ public class EmpresaBean implements Serializable{
 
 	public void setEmpresa(EmpresaDto empresa) {
 		this.empresa = empresa;
-	}
-	
-	public List<EmpresaDto> getEmpresas(){
+	}	
+
+	public LazyDataModel<EmpresaDto> getEmpresas() {
 		return empresas;
 	}
 
