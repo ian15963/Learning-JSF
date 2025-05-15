@@ -8,8 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.primefaces.model.SortOrder;
-
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
@@ -60,7 +58,6 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 
 	@Override
 	public List<EmpresaDto> findAll(Page pageInfo) {
-		boolean ascending = SortOrder.ASCENDING.equals(pageInfo.getOrderBy());
 		String jpql = "SELECT new cadastro.empresas.aplicacao.dto.EmpresaDto("
 				+ "e.id,"
 				+ "e.razaoSocial,"
@@ -68,15 +65,12 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 				+ "e.tipo,"
 				+ "e.ramoAtividade) "
 				+ "FROM Empresa e";
-		if (pageInfo.getSortBy() != null) {
-			jpql += " ORDER BY e." + pageInfo.getSortBy() + (ascending ? " ASC" : " DESC");
-		}
-		TypedQuery<EmpresaDto> query = entityManager
-				.createQuery(jpql, 
-						EmpresaDto.class);
 		
-		return query
-				.setFirstResult(pageInfo.getPage())
+		jpql = pageInfo.buildSortQuery(jpql);
+		
+		TypedQuery<EmpresaDto> query = entityManager.createQuery(jpql, EmpresaDto.class);
+		
+		return query.setFirstResult(pageInfo.getPage())
 				.setMaxResults(pageInfo.getPageSize())
 				.getResultList();
 	}

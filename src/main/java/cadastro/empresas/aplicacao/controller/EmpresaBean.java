@@ -28,6 +28,7 @@ import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 import cadastro.empresas.aplicacao.service.EmpresaService;
 import cadastro.empresas.aplicacao.util.CustomFacesMessage;
+import cadastro.empresas.aplicacao.util.LazyDataModelUtils;
 import cadastro.empresas.aplicacao.util.Page;
 import cadastro.empresas.aplicacao.util.Transactional;
 
@@ -48,23 +49,8 @@ public class EmpresaBean implements Serializable{
 	private String razaoSocial;
 	private Converter<RamoAtividadeDto> converter;
 	
-	private LazyDataModel<EmpresaDto> createLazyDataModel(){
-		return new LazyDataModel<EmpresaDto>() {
-			private static final long serialVersionUID = 710412098474697979L;
-			
-			public List<EmpresaDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-				Page pageInfo = new Page(first, pageSize, sortField, sortOrder);
-                List<EmpresaDto> data = empresaService.fetchEmpresas(pageInfo);
-                int total = repository.totalElements();
-
-                this.setRowCount(total);
-                return data;
-            }
-        };
-	}
-	
 	public void pesquisarEmpresa() {
-//		empresas = createrepository.search(razaoSocial);
+//		empresas = repository.search(razaoSocial);
 //		if(empresas.isEmpty()) {
 //			CustomFacesMessage.info("Nenhuma empresa encontrada");
 //		}
@@ -89,7 +75,10 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	public void listarEmpresas() {
-		empresas = createLazyDataModel();
+		int totalElements = repository.totalElements();
+		empresas = LazyDataModelUtils.createLazyDataModel(page -> {
+			return empresaService.fetchEmpresas(page);
+		}, totalElements);
 	}
 	
 	private void salvar() {
