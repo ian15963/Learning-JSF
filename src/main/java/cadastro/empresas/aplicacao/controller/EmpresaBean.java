@@ -31,6 +31,7 @@ import cadastro.empresas.aplicacao.util.CustomFacesMessage;
 import cadastro.empresas.aplicacao.util.LazyDataModelUtils;
 import cadastro.empresas.aplicacao.util.Page;
 import cadastro.empresas.aplicacao.util.Transactional;
+import cadastro.empresas.aplicacao.util.ViewUtils;
 
 @Named
 @ViewScoped
@@ -54,9 +55,6 @@ public class EmpresaBean implements Serializable{
 		empresas = LazyDataModelUtils.createLazyDataModel(page -> {
 			return service.searchEmpresas(page, razaoSocial);			
 		}, totalElements); 
-		if(empresas.isRowAvailable()) {
-			CustomFacesMessage.info("Nenhuma empresa encontrada");
-		}
 	}
 	
 	public void prepararEmpresa() {
@@ -71,9 +69,7 @@ public class EmpresaBean implements Serializable{
 	
 	public List<RamoAtividadeDto> completarRamoAtividade(String termo){
 		List<RamoAtividadeDto> ramos = ramoAtividadeRepository.search(termo);
-		
 		converter = new RamoAtividadeConverter(ramos);
-		
 		return ramos;
 	}
 	
@@ -88,51 +84,35 @@ public class EmpresaBean implements Serializable{
 		Empresa entity = EmpresaMapper.toEntity(empresa);
 		this.repository.create(entity);
 		
-		if(isRazaoSocialBlank()) {
-			listarEmpresas();
-		}else{
-			pesquisarEmpresa();
-		}
-		
+		renderTableContent();
 		CustomFacesMessage.info("Empresa adicionada com sucesso!");
-		
-		RequestContext.getCurrentInstance()
-			.update(Arrays
-					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
+		ViewUtils.updateComponents("formulario:tabelaEmpresa", "formulario:globalMessage");
 	}
 	
 	private void update() {
 		Empresa entity = EmpresaMapper.toEntity(empresa);
 		this.repository.update(entity);
 		
-		if(isRazaoSocialBlank()) {
-			listarEmpresas();
-		}else{
-			pesquisarEmpresa();
-		}
-		
+		renderTableContent();
 		CustomFacesMessage.info("Empresa atualizada com sucesso!");
-		
-		RequestContext.getCurrentInstance()
-			.update(Arrays
-					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
+		ViewUtils.updateComponents("formulario:tabelaEmpresa", "formulario:globalMessage");
 	}
 	
 	public void delete() {
 		Empresa entity = EmpresaMapper.toEntity(empresa);
 		this.repository.delete(entity);
 		
+		renderTableContent();
+		CustomFacesMessage.info("Empresa deletada com sucesso!");
+		ViewUtils.updateComponents("formulario:tabelaEmpresa", "formulario:globalMessage");
+	}
+	
+	private void renderTableContent() {
 		if(isRazaoSocialBlank()) {
 			listarEmpresas();
 		}else{
 			pesquisarEmpresa();
 		}
-		
-		CustomFacesMessage.info("Empresa deletada com sucesso!");
-		
-		RequestContext.getCurrentInstance()
-			.update(Arrays
-					.asList("formulario:tabelaEmpresa", "formulario:globalMessage"));
 	}
 	
 	public void buttonAction() {
@@ -144,7 +124,7 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	private boolean isRazaoSocialBlank() {
-		return StringUtils.isNullOrEmpty(razaoSocial);
+		return StringUtils.isNullOrEmpty(razaoSocial.trim());
 	}
 	
 	public TipoEmpresa[] getTiposEmpresa() {
