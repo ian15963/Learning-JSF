@@ -43,17 +43,20 @@ public class EmpresaBean implements Serializable{
 	@Inject
 	private RamoAtividadeRepository ramoAtividadeRepository;
 	@Inject
-	private EmpresaService empresaService;
+	private EmpresaService service;
 	private LazyDataModel<EmpresaDto> empresas;
 	private EmpresaDto empresa;
 	private String razaoSocial;
 	private Converter<RamoAtividadeDto> converter;
 	
 	public void pesquisarEmpresa() {
-//		empresas = repository.search(razaoSocial);
-//		if(empresas.isEmpty()) {
-//			CustomFacesMessage.info("Nenhuma empresa encontrada");
-//		}
+		int totalElements = repository.totalElementsFromSearch(razaoSocial);
+		empresas = LazyDataModelUtils.createLazyDataModel(page -> {
+			return service.searchEmpresas(page, razaoSocial);			
+		}, totalElements); 
+		if(empresas.isRowAvailable()) {
+			CustomFacesMessage.info("Nenhuma empresa encontrada");
+		}
 	}
 	
 	public void prepararEmpresa() {
@@ -77,7 +80,7 @@ public class EmpresaBean implements Serializable{
 	public void listarEmpresas() {
 		int totalElements = repository.totalElements();
 		empresas = LazyDataModelUtils.createLazyDataModel(page -> {
-			return empresaService.fetchEmpresas(page);
+			return service.fetchEmpresas(page);
 		}, totalElements);
 	}
 	

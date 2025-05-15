@@ -13,7 +13,7 @@ public interface EmpresaRepository {
 	Empresa create(Empresa empresa);
 	Empresa update(Empresa empresa);
 	void delete(Empresa empresa);
-	List<EmpresaDto> search(String razaoSocial);
+	List<EmpresaDto> search(Page page, String razaoSocial);
 	int totalElements();
-
+	int totalElementsFromSearch(String razaoSocial);
 }

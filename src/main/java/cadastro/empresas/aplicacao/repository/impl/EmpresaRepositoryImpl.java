@@ -43,17 +43,30 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 	}
 
 	@Override
-	public List<EmpresaDto> search(String razaoSocial) {
-		TypedQuery<EmpresaDto> query = entityManager.createQuery("SELECT "
+	public List<EmpresaDto> search(Page page, String razaoSocial) {
+		String jpql = "SELECT "
 				+ "new cadastro.empresas.aplicacao.dto.EmpresaDto("
 				+ "e.id,"
 				+ "e.razaoSocial,"
 				+ "e.nomeFantasia,"
-				+ "e.tipoEmpresa,"
-				+ "new cadastro.empresas.aplicacao.dto.RamoAtividadeDto(e.ramoAtividade))"
-				+ " FROM Empresa e WHERE e.razaoSocial LIKE CONCAT('%', :razaoSocial, '%')", EmpresaDto.class);
+				+ "e.tipo,"
+				+ "e.ramoAtividade)"
+				+ " FROM Empresa e WHERE e.razaoSocial LIKE CONCAT('%', :razaoSocial, '%')";
+		
+		jpql = page.buildSortQuery(jpql);
+		TypedQuery<EmpresaDto> query = entityManager.createQuery(jpql, EmpresaDto.class);
+		
 		query.setParameter("razaoSocial", razaoSocial);
-		return query.getResultList();
+		return query.setFirstResult(page.getPage())
+				.setMaxResults(page.getPageSize())
+				.getResultList();
+	}
+	
+	@Override
+	public int totalElementsFromSearch(String razaoSocial) {
+		Query query = entityManager.createQuery("SELECT COUNT(e) FROM Empresa e WHERE e.razaoSocial LIKE CONCAT('%', :razaoSocial, '%')");
+		query.setParameter("razaoSocial", razaoSocial);
+		return ((Long) query.getSingleResult()).intValue();
 	}
 
 	@Override

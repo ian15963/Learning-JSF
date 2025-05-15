@@ -26,4 +26,10 @@ public class EmpresaService {
 		ramoAtividadeRepository.findAll();
 		return repository.findAll(pageInfo);
 	}
+	
+	@Transactional
+	public List<EmpresaDto> searchEmpresas(Page pageInfo, String razaoSocial){
+		ramoAtividadeRepository.findAll();
+		return repository.search(pageInfo, razaoSocial);
+	}
 }

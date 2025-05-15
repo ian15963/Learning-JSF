@@ -22,8 +22,8 @@ public class Page {
 	}
 	
 	public String buildSortQuery(String query) {
-		boolean isAscendingOrder = SortOrder.ASCENDING.equals(orderBy);
 		if (Objects.nonNull(sortBy)) {
+			boolean isAscendingOrder = SortOrder.ASCENDING.equals(orderBy);
 			query += " ORDER BY e." + this.getSortBy() + (isAscendingOrder ? " ASC" : " DESC");
 		}
 		return query;
