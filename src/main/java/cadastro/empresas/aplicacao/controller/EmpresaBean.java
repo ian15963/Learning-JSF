@@ -28,6 +28,7 @@ import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 import cadastro.empresas.aplicacao.service.EmpresaService;
 import cadastro.empresas.aplicacao.util.CustomFacesMessage;
+import cadastro.empresas.aplicacao.util.Page;
 import cadastro.empresas.aplicacao.util.Transactional;
 
 @Named
@@ -52,7 +53,8 @@ public class EmpresaBean implements Serializable{
 			private static final long serialVersionUID = 710412098474697979L;
 			
 			public List<EmpresaDto> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                List<EmpresaDto> data = empresaService.fetchEmpresas(first, pageSize, sortField, sortOrder, filters);
+				Page pageInfo = new Page(first, pageSize, sortField, sortOrder);
+                List<EmpresaDto> data = empresaService.fetchEmpresas(pageInfo);
                 int total = repository.totalElements();
 
                 this.setRowCount(total);

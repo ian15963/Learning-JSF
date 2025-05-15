@@ -13,6 +13,7 @@ import org.primefaces.model.SortOrder;
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
+import cadastro.empresas.aplicacao.util.Page;
 import cadastro.empresas.aplicacao.util.Transactional;
 
 @Transactional
@@ -58,8 +59,8 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 	}
 
 	@Override
-	public List<EmpresaDto> findAll(int first, int pageSize, String sortField, SortOrder sortOrder) {
-		boolean ascending = SortOrder.ASCENDING.equals(sortOrder);
+	public List<EmpresaDto> findAll(Page pageInfo) {
+		boolean ascending = SortOrder.ASCENDING.equals(pageInfo.getOrderBy());
 		String jpql = "SELECT new cadastro.empresas.aplicacao.dto.EmpresaDto("
 				+ "e.id,"
 				+ "e.razaoSocial,"
@@ -67,16 +68,16 @@ public class EmpresaRepositoryImpl implements EmpresaRepository{
 				+ "e.tipo,"
 				+ "e.ramoAtividade) "
 				+ "FROM Empresa e";
-		if (sortField != null) {
-			jpql += " ORDER BY e." + sortField + (ascending ? " ASC" : " DESC");
+		if (pageInfo.getSortBy() != null) {
+			jpql += " ORDER BY e." + pageInfo.getSortBy() + (ascending ? " ASC" : " DESC");
 		}
 		TypedQuery<EmpresaDto> query = entityManager
 				.createQuery(jpql, 
 						EmpresaDto.class);
 		
 		return query
-				.setFirstResult(first)
-				.setMaxResults(pageSize)
+				.setFirstResult(pageInfo.getPage())
+				.setMaxResults(pageInfo.getPageSize())
 				.getResultList();
 	}
 
