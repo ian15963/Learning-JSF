@@ -27,6 +27,8 @@ public class CacheManagerConfig {
 					)
 				)
 				.build();
+		
+		cacheManager.init();
 		cache = cacheManager.getCache("cache", String.class, Object.class);
 	}
 	
