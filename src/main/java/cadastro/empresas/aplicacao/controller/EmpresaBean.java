@@ -21,6 +21,7 @@ import com.mysql.cj.util.StringUtils;
 import cadastro.empresas.aplicacao.converter.RamoAtividadeConverter;
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
+import cadastro.empresas.aplicacao.interceptor.Transactional;
 import cadastro.empresas.aplicacao.mapper.EmpresaMapper;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
@@ -30,7 +31,6 @@ import cadastro.empresas.aplicacao.service.EmpresaService;
 import cadastro.empresas.aplicacao.util.CustomFacesMessage;
 import cadastro.empresas.aplicacao.util.LazyDataModelUtils;
 import cadastro.empresas.aplicacao.util.Page;
-import cadastro.empresas.aplicacao.util.Transactional;
 import cadastro.empresas.aplicacao.util.ViewUtils;
 
 @Named

@@ -7,10 +7,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
+import cadastro.empresas.aplicacao.interceptor.Cacheable;
+import cadastro.empresas.aplicacao.interceptor.Transactional;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 import cadastro.empresas.aplicacao.util.Page;
-import cadastro.empresas.aplicacao.util.Transactional;
 
 @Named
 @ApplicationScoped
@@ -21,10 +22,12 @@ public class EmpresaService {
 	@Inject
 	private RamoAtividadeRepository ramoAtividadeRepository;
 	
+	@Cacheable(name = "empresas")
 	@Transactional
 	public List<EmpresaDto> fetchEmpresas(Page pageInfo){
 		ramoAtividadeRepository.findAll();
-		return repository.findAll(pageInfo);
+		List<EmpresaDto> empresas = repository.findAll(pageInfo);
+		return empresas;
 	}
 	
 	@Transactional

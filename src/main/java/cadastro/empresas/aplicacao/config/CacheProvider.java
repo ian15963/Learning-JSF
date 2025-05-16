@@ -5,17 +5,12 @@ import java.time.Duration;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-
-import org.apache.commons.collections4.map.PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy;
-import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
-import org.ehcache.expiry.Expirations;
-import org.ehcache.expiry.ExpiryPolicy;
 
 @ApplicationScoped
 public class CacheProvider {
@@ -40,21 +35,21 @@ public class CacheProvider {
 		cache = cacheManager.getCache("cache", String.class, Object.class);
 	}
 	
-	 public void put(String key, Object value) {
-	        cache.put(key, value);
-	    }
+	public void put(String key, Object value) {
+	   cache.put(key, value);
+	}
 
-	    public Object get(String key) {
-	        return cache.get(key);
-	    }
+	public Object get(String key) {
+	    return cache.get(key);
+	}
 
-	    public boolean contains(String key) {
-	        return cache.containsKey(key);
-	    }
-
-	    @PreDestroy
-	    public void shutdown() {
-	        cacheManager.close();
-	    }
+	public boolean contains(String key) {
+	    return cache.containsKey(key);
+	}
+	
+	@PreDestroy
+	public void shutdown() {
+	    cacheManager.close();
+	}
 	
 }
