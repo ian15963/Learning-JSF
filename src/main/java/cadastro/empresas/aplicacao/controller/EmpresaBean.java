@@ -3,34 +3,27 @@ package cadastro.empresas.aplicacao.controller;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-import javax.annotation.PostConstruct;
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
 import com.mysql.cj.util.StringUtils;
 
 import cadastro.empresas.aplicacao.converter.RamoAtividadeConverter;
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
-import cadastro.empresas.aplicacao.interceptor.Transactional;
 import cadastro.empresas.aplicacao.mapper.EmpresaMapper;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
-import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 import cadastro.empresas.aplicacao.service.EmpresaService;
 import cadastro.empresas.aplicacao.util.CustomFacesMessage;
 import cadastro.empresas.aplicacao.util.LazyDataModelUtils;
-import cadastro.empresas.aplicacao.util.Page;
 import cadastro.empresas.aplicacao.util.ViewUtils;
 
 @Named
@@ -39,8 +32,6 @@ public class EmpresaBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Inject
-	private EmpresaRepository repository;
 	@Inject
 	private RamoAtividadeRepository ramoAtividadeRepository;
 	@Inject
@@ -51,7 +42,7 @@ public class EmpresaBean implements Serializable{
 	private Converter<RamoAtividadeDto> converter;
 	
 	public void pesquisarEmpresa() {
-		int totalElements = repository.totalElementsFromSearch(razaoSocial);
+		int totalElements = service.totalElements(razaoSocial);
 		empresas = LazyDataModelUtils.createLazyDataModel(page -> {
 			return service.searchEmpresas(page, razaoSocial);			
 		}, totalElements); 
@@ -62,7 +53,7 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	public void prepararEdicao() {
-		Empresa entity = repository.findById(empresa.getId());
+		Empresa entity = service.findById(empresa.getId());
 		empresa = EmpresaMapper.toDto(entity);
 		converter = new RamoAtividadeConverter(Arrays.asList(empresa.getRamoAtividade()));
 	}
@@ -74,7 +65,7 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	public void listarEmpresas() {
-		int totalElements = repository.totalElements();
+		int totalElements = service.totalElements();
 		empresas = LazyDataModelUtils.createLazyDataModel(page -> {
 			return service.fetchEmpresas(page);
 		}, totalElements);
@@ -82,7 +73,7 @@ public class EmpresaBean implements Serializable{
 	
 	private void salvar() {
 		Empresa entity = EmpresaMapper.toEntity(empresa);
-		this.repository.create(entity);
+		this.service.save(entity);
 		
 		renderTableContent();
 		CustomFacesMessage.info("Empresa adicionada com sucesso!");
@@ -91,7 +82,7 @@ public class EmpresaBean implements Serializable{
 	
 	private void update() {
 		Empresa entity = EmpresaMapper.toEntity(empresa);
-		this.repository.update(entity);
+		this.service.update(entity);
 		
 		renderTableContent();
 		CustomFacesMessage.info("Empresa atualizada com sucesso!");
@@ -100,7 +91,7 @@ public class EmpresaBean implements Serializable{
 	
 	public void delete() {
 		Empresa entity = EmpresaMapper.toEntity(empresa);
-		this.repository.delete(entity);
+		this.service.delete(entity);
 		
 		renderTableContent();
 		CustomFacesMessage.info("Empresa deletada com sucesso!");

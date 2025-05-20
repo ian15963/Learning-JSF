@@ -9,30 +9,53 @@ import javax.inject.Named;
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
 import cadastro.empresas.aplicacao.interceptor.Transactional;
 import cadastro.empresas.aplicacao.interceptor.cache.annotations.Cacheable;
+import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
-import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 import cadastro.empresas.aplicacao.util.Page;
 
 @Named
 @ApplicationScoped
+@Transactional
 public class EmpresaService {
 
 	@Inject
 	private EmpresaRepository repository;
 	@Inject
-	private RamoAtividadeRepository ramoAtividadeRepository;
+	private RamoAtividadeService ramoAtividadeService;
 	
 	@Cacheable(name = "empresas")
-	@Transactional
 	public List<EmpresaDto> fetchEmpresas(Page pageInfo){
-		ramoAtividadeRepository.findAll();
+		ramoAtividadeService.findAll();
 		List<EmpresaDto> empresas = repository.findAll(pageInfo);
 		return empresas;
 	}
 	
-	@Transactional
+	public Empresa findById(Long id) {
+		return repository.findById(id);
+	}
+	
 	public List<EmpresaDto> searchEmpresas(Page pageInfo, String razaoSocial){
-		ramoAtividadeRepository.findAll();
+		ramoAtividadeService.findAll();
 		return repository.search(pageInfo, razaoSocial);
+	}
+	
+	public Empresa save(Empresa empresa) {
+		return repository.create(empresa);
+	}
+	
+	public Empresa update(Empresa empresa) {
+		return repository.update(empresa);
+	}
+	
+	public void delete(Empresa empresa) {
+		repository.delete(empresa);
+	}
+	
+	public int totalElements() {
+		return repository.totalElements();
+	}
+	
+	public int totalElements(String razaoSocial) {
+		return repository.totalElementsFromSearch(razaoSocial);
 	}
 }
