@@ -22,26 +22,37 @@ public class CachePutInterceptor {
 	
 	@AroundInvoke
 	public Object invoke(InvocationContext invocationContext) throws Exception {
-		
 		String cacheName = findCacheName(invocationContext);
-		if(Objects.isNull(cacheName)) {
-			//TODO: lançar exceção.
-			return invocationContext.proceed();
-		}
-		
-		Object invocationResult = invocationContext.proceed();
-		if(Objects.isNull(invocationResult)) {
-			//TODO: lançar exceção.
-			return invocationResult;
-		}
+		Object invocationResult = invocationResult(invocationContext);
 		cacheProvider.put(cacheName, invocationResult);
 		return invocationResult;
 	}
 	
+	private Object invocationResult(InvocationContext invocationContext) throws Exception {
+		Object invocationResult = invocationContext.proceed();
+		validateInvocationResult(invocationResult);
+		return invocationResult;
+	}
+	
+	private void validateInvocationResult(Object invocationResult) {
+		if(Objects.isNull(invocationResult)) {
+			throw new IllegalArgumentException("Resultado da execução do método não pode ser nulo");
+		}
+	}
+
 	private String findCacheName(InvocationContext invocationContext) {
 		Method method = invocationContext.getMethod();
 		CachePut cacheableAnnotation =  method.getDeclaredAnnotation(CachePut.class);
-		return cacheableAnnotation.name();
+		
+		String cacheName = cacheableAnnotation.name();
+		validateCacheName(cacheName);
+		return cacheName;
+	}
+
+	private void validateCacheName(String cacheName) {
+		if(Objects.isNull(cacheName)) {
+			throw new IllegalArgumentException("Não existe cache com essa chave");
+		}
 	}
 	
 }
