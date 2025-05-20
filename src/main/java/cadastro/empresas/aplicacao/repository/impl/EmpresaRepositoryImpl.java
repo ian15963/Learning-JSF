@@ -14,7 +14,6 @@ import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.util.Page;
 
-@Transactional
 @ApplicationScoped
 public class EmpresaRepositoryImpl implements EmpresaRepository{
 	
