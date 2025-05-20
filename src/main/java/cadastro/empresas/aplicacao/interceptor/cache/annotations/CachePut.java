@@ -1,4 +1,4 @@
-package cadastro.empresas.aplicacao.interceptor;
+package cadastro.empresas.aplicacao.interceptor.cache.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
 
-@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
 @InterceptorBinding
-public @interface Cacheable {
+public @interface CachePut {
 	@Nonbinding String name() default "";
 }

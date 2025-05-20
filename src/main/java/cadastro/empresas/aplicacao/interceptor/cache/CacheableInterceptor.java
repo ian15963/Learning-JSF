@@ -1,4 +1,4 @@
-package cadastro.empresas.aplicacao.interceptor;
+package cadastro.empresas.aplicacao.interceptor.cache;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -11,11 +11,12 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
 import cadastro.empresas.aplicacao.config.CacheProvider;
+import cadastro.empresas.aplicacao.interceptor.cache.annotations.Cacheable;
 
 @Interceptor
 @Cacheable
 @Priority(Interceptor.Priority.APPLICATION)
-public class CacheInterceptor implements Serializable {
+public class CacheableInterceptor implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
