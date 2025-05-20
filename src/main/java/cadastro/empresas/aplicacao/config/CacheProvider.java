@@ -42,6 +42,10 @@ public class CacheProvider {
 	public Object get(String key) {
 	    return cache.get(key);
 	}
+	
+	public void remove(String key) {
+		cache.remove(key);
+	}
 
 	public boolean contains(String key) {
 	    return cache.containsKey(key);
