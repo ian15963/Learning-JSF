@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
-import cadastro.empresas.aplicacao.interceptor.Transactional;
 import cadastro.empresas.aplicacao.interceptor.cache.annotations.Cacheable;
+import cadastro.empresas.aplicacao.interceptor.transactional.Transactional;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.util.Page;

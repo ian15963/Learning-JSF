@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cadastro.empresas.aplicacao.interceptor.Transactional;
+import cadastro.empresas.aplicacao.interceptor.transactional.Transactional;
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.repository.RamoAtividadeRepository;
 

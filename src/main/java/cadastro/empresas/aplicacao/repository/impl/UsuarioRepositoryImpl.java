@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import cadastro.empresas.aplicacao.interceptor.Transactional;
+import cadastro.empresas.aplicacao.interceptor.transactional.Transactional;
 import cadastro.empresas.aplicacao.model.Usuario;
 import cadastro.empresas.aplicacao.repository.UsuarioRepository;
 

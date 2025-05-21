@@ -1,4 +1,4 @@
-package cadastro.empresas.aplicacao.util;
+package cadastro.empresas.aplicacao.interceptor.transactional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;

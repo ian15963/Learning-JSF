@@ -1,4 +1,4 @@
-package cadastro.empresas.aplicacao.interceptor;
+package cadastro.empresas.aplicacao.interceptor.transactional;
 
 import java.io.Serializable;
 

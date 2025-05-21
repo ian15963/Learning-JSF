@@ -1,4 +1,4 @@
-package cadastro.empresas.aplicacao.interceptor;
+package cadastro.empresas.aplicacao.interceptor.transactional;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
