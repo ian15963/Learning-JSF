@@ -23,13 +23,14 @@ public class EmpresaService {
 	@Inject
 	private RamoAtividadeService ramoAtividadeService;
 	
-	@Cacheable(name = "empresas")
+	@Cacheable(name = "empresas", key = "#pageInfo")
 	public List<EmpresaDto> fetchEmpresas(Page pageInfo){
 		ramoAtividadeService.findAll();
 		List<EmpresaDto> empresas = repository.findAll(pageInfo);
 		return empresas;
 	}
 	
+	@Cacheable(name = "empresa", key = "#id")
 	public Empresa findById(Long id) {
 		return repository.findById(id);
 	}

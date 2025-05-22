@@ -13,4 +13,5 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 public @interface Cacheable {
 	@Nonbinding String name() default "";
+	@Nonbinding String key() default "";
 }

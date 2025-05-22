@@ -1,7 +1,9 @@
 package cadastro.empresas.aplicacao.interceptor.cache;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Objects;
 
 import javax.annotation.Priority;
@@ -45,8 +47,28 @@ public class CacheableInterceptor implements Serializable {
 	
 	private String findCacheName(InvocationContext invocationContext) {
 		Method method = invocationContext.getMethod();
+		Object[] parameters = invocationContext.getParameters();
+		Parameter[] methodParameters = method.getParameters();
 		Cacheable cacheableAnnotation =  method.getDeclaredAnnotation(Cacheable.class);
-		return cacheableAnnotation.name();
+		String cacheName = cacheableAnnotation.name();
+		String cacheKey = cacheableAnnotation.key().substring(1);
+		for(int i = 0; i < parameters.length; i++) {
+			String parameterName = methodParameters[i].getName();
+			if(parameterName.equals(cacheKey)) {
+				Field[] fields = parameters[i].getClass().getDeclaredFields();
+				for(Field field: fields) {
+					try {
+						field.setAccessible(true);
+						cacheName += String.format("#%s:%s",field.getName(), field.get(parameters[i]));
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						e.printStackTrace();
+					}finally {
+						field.setAccessible(false);
+					}
+				}
+			}
+		}
+		return cacheName;
 	}
 	
 }
