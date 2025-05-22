@@ -146,11 +146,11 @@ public class EmpresaBean implements Serializable{
 		return empresas;
 	}
 
-	public Converter getConverter() {
+	public Converter<RamoAtividadeDto> getConverter() {
 		return converter;
 	}
 
-	public void setConverter(Converter converter) {
+	public void setConverter(Converter<RamoAtividadeDto> converter) {
 		this.converter = converter;
 	}
 	

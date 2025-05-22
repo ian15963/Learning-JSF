@@ -5,9 +5,11 @@ import java.util.Date;
 
 import cadastro.empresas.aplicacao.model.RamoAtividade;
 import cadastro.empresas.aplicacao.model.enums.TipoEmpresa;
+import cadastro.empresas.aplicacao.util.LazyDataModelIdentifier;
 
 public class EmpresaDto {
 
+	@LazyDataModelIdentifier
 	private Long id;
 	private String razaoSocial;
 	private String nomeFantasia;
