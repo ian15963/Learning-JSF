@@ -2,6 +2,8 @@ package cadastro.empresas.aplicacao.config.cache;
 
 import java.lang.reflect.Method;
 
+import cadastro.empresas.aplicacao.interceptor.cache.annotations.CacheEvict;
+import cadastro.empresas.aplicacao.interceptor.cache.annotations.CachePut;
 import cadastro.empresas.aplicacao.interceptor.cache.annotations.Cacheable;
 
 public class Cache {
@@ -20,6 +22,10 @@ public class Cache {
 	public static Cache createFromMethod(Method method) {
 		if(method.isAnnotationPresent(Cacheable.class)) {
 			return createFromCacheableAnnotation(method.getDeclaredAnnotation(Cacheable.class));
+		}else if(method.isAnnotationPresent(CachePut.class)) {
+			return createFromCachePutAnnotation(method.getDeclaredAnnotation(CachePut.class));
+		}else if(method.isAnnotationPresent(CacheEvict.class)) {
+			return createFromCacheEvitAnnotation(method.getDeclaredAnnotation(CacheEvict.class));
 		}
 		return new Cache("", "");
 	}
@@ -27,6 +33,18 @@ public class Cache {
 	private static Cache createFromCacheableAnnotation(Cacheable cacheableAnnotation) {
 		String cacheName = cacheableAnnotation.name();
 		String cacheKey = cacheableAnnotation.key().substring(1);
+		return new Cache(cacheName, cacheKey);
+	}
+	
+	private static Cache createFromCachePutAnnotation(CachePut cachePutAnnotation) {
+		String cacheName = cachePutAnnotation.name();
+		String cacheKey = cachePutAnnotation.key().substring(1);
+		return new Cache(cacheName, cacheKey);
+	}
+	
+	private static Cache createFromCacheEvitAnnotation(CacheEvict cacheEvictAnnotation) {
+		String cacheName = cacheEvictAnnotation.name();
+		String cacheKey = cacheEvictAnnotation.key().substring(1);
 		return new Cache(cacheName, cacheKey);
 	}
 	

@@ -13,4 +13,5 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 public @interface CachePut {
 	@Nonbinding String name() default "";
+	@Nonbinding String key() default "";
 }

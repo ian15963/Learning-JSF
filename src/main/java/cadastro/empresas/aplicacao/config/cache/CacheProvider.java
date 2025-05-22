@@ -1,11 +1,13 @@
 package cadastro.empresas.aplicacao.config.cache;
 
 import java.time.Duration;
+import java.util.Iterator;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import org.ehcache.Cache;
+import org.ehcache.Cache.Entry;
 import org.ehcache.CacheManager;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
@@ -49,6 +51,17 @@ public class CacheProvider {
 
 	public boolean contains(String key) {
 	    return cache.containsKey(key);
+	}
+	
+	public void removeAll(String key) {
+		Iterator<Entry<String, Object>> iterator = cache.iterator();
+		while(iterator.hasNext()) {
+			Entry<String, Object> entry = iterator.next();
+			String entryKey = entry.getKey();
+			if(entryKey.contains(key)) {
+				cache.remove(entryKey);
+			}
+		}
 	}
 	
 	@PreDestroy

@@ -12,4 +12,5 @@ import javax.interceptor.InterceptorBinding;
 @InterceptorBinding
 public @interface CacheEvict {
 	String name() default "";
+	boolean allEntries() default false;
 }
