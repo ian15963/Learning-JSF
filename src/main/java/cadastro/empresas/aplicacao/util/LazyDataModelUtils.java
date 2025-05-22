@@ -26,7 +26,9 @@ public class LazyDataModelUtils {
 			}
 
 			public R getRowData(String rowKey) {
-				List<R> dataList = loadedData.stream().filter(data -> this.getRowKey(data).toString().equals(rowKey)).toList();
+				List<R> dataList = loadedData.stream()
+						.filter(data -> this.getRowKey(data).toString().equals(rowKey))
+						.toList();
 				return dataList.isEmpty() ? null : dataList.get(0);
 			}
 

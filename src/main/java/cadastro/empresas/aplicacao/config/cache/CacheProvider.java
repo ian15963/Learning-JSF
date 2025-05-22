@@ -1,4 +1,4 @@
-package cadastro.empresas.aplicacao.config;
+package cadastro.empresas.aplicacao.config.cache;
 
 import java.time.Duration;
 

@@ -9,7 +9,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
-import cadastro.empresas.aplicacao.config.CacheProvider;
+import cadastro.empresas.aplicacao.config.cache.CacheProvider;
 import cadastro.empresas.aplicacao.interceptor.cache.annotations.CacheEvict;
 import cadastro.empresas.aplicacao.interceptor.cache.annotations.CachePut;
 
