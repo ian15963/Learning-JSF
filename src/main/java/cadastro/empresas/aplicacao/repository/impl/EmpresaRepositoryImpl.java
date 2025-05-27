@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
-import cadastro.empresas.aplicacao.interceptor.transactional.Transactional;
 import cadastro.empresas.aplicacao.model.Empresa;
 import cadastro.empresas.aplicacao.repository.EmpresaRepository;
 import cadastro.empresas.aplicacao.util.Page;

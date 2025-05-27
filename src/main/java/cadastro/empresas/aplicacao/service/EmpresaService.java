@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cadastro.empresas.aplicacao.dto.EmpresaDto;
+import cadastro.empresas.aplicacao.interceptor.cache.annotations.CacheEvict;
 import cadastro.empresas.aplicacao.interceptor.cache.annotations.Cacheable;
 import cadastro.empresas.aplicacao.interceptor.transactional.Transactional;
 import cadastro.empresas.aplicacao.model.Empresa;
@@ -40,6 +41,7 @@ public class EmpresaService {
 		return repository.search(pageInfo, razaoSocial);
 	}
 	
+	@CacheEvict(name = "empresas", allEntries = true)
 	public Empresa save(Empresa empresa) {
 		return repository.create(empresa);
 	}

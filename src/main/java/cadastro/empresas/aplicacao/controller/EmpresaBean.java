@@ -115,7 +115,7 @@ public class EmpresaBean implements Serializable{
 	}
 	
 	private boolean isRazaoSocialBlank() {
-		return StringUtils.isNullOrEmpty(razaoSocial.trim());
+		return StringUtils.isNullOrEmpty(razaoSocial);
 	}
 	
 	public TipoEmpresa[] getTiposEmpresa() {

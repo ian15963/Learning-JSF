@@ -9,7 +9,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 import cadastro.empresas.aplicacao.dto.RamoAtividadeDto;
-import cadastro.empresas.aplicacao.model.RamoAtividade;
 
 public class RamoAtividadeConverter implements Converter<RamoAtividadeDto>{
 

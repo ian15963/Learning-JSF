@@ -14,6 +14,10 @@ public class Cache {
 	private Cache() {
 	}
 	
+	private Cache(String name) {
+		this.name = name;
+	}
+	
 	private Cache(String name, String key) {
 		this.name = name;
 		this.key = key;
@@ -44,8 +48,7 @@ public class Cache {
 	
 	private static Cache createFromCacheEvitAnnotation(CacheEvict cacheEvictAnnotation) {
 		String cacheName = cacheEvictAnnotation.name();
-		String cacheKey = cacheEvictAnnotation.key().substring(1);
-		return new Cache(cacheName, cacheKey);
+		return new Cache(cacheName);
 	}
 	
 	public void updateCacheName(String key, Object value) {
