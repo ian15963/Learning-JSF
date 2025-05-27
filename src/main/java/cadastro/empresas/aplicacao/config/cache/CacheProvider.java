@@ -53,14 +53,17 @@ public class CacheProvider {
 	    return cache.containsKey(key);
 	}
 	
-	public void removeAll(String key) {
+	public void removeAll(String ...keys) {
 		Iterator<Entry<String, Object>> iterator = cache.iterator();
 		while(iterator.hasNext()) {
 			Entry<String, Object> entry = iterator.next();
 			String entryKey = entry.getKey();
-			if(entryKey.contains(key)) {
-				cache.remove(entryKey);
+			for(String key: keys) {
+				if(entryKey.contains(key)) {
+					cache.remove(entryKey);
+				}
 			}
+			
 		}
 	}
 	

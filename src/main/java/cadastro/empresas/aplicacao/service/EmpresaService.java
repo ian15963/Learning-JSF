@@ -46,8 +46,9 @@ public class EmpresaService {
 		return repository.create(empresa);
 	}
 	
-	public Empresa update(Empresa empresa) {
-		return repository.update(empresa);
+	@CacheEvict(name = {"empresas", "empresa"}, allEntries = true)
+	public Empresa update(Long id, Empresa empresa) {
+		return repository.update(id, empresa);
 	}
 	
 	public void delete(Empresa empresa) {

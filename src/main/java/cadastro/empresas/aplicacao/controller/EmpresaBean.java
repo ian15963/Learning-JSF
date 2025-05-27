@@ -82,7 +82,7 @@ public class EmpresaBean implements Serializable{
 	
 	private void update() {
 		Empresa entity = EmpresaMapper.toEntity(empresa);
-		this.service.update(entity);
+		this.service.update(empresa.getId(), entity);
 		
 		renderTableContent();
 		CustomFacesMessage.info("Empresa atualizada com sucesso!");

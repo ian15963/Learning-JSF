@@ -34,8 +34,8 @@ public class CacheEvictInterceptor {
 	
 	private void removeAllEntries(InvocationContext invocationContext) {
 		CacheEvict annotation = invocationContext.getMethod().getDeclaredAnnotation(CacheEvict.class);
-		String cacheName = annotation.name();
-		cacheProvider.removeAll(cacheName);
+		String[] cacheNames = annotation.name();
+		cacheProvider.removeAll(cacheNames);
 	}
 	
 	private boolean isRemoveAllEntriesEnabled(InvocationContext invocationContext) {

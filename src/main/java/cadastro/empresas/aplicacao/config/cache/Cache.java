@@ -47,7 +47,7 @@ public class Cache {
 	}
 	
 	private static Cache createFromCacheEvitAnnotation(CacheEvict cacheEvictAnnotation) {
-		String cacheName = cacheEvictAnnotation.name();
+		String cacheName = cacheEvictAnnotation.name()[0];
 		return new Cache(cacheName);
 	}
 	

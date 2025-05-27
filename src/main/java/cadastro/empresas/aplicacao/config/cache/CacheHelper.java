@@ -33,12 +33,26 @@ public class CacheHelper {
 	}
 	
 	private static void fillCacheName(Cache cache, Object parameter) {
+		if(isWrapperOrPrimitiveType(parameter)) {
+			cache.updateCacheName(cache.getKey(), parameter);
+			return;
+		}
 		Field[] fields = parameter.getClass().getDeclaredFields();
 		for(Field field: fields) {
 			fillCacheName(cache, field, parameter);
 		}
 	}
 	
+	private static boolean isWrapperOrPrimitiveType(Object parameter) {
+		if(parameter instanceof String 
+				|| parameter instanceof Long 
+				|| parameter instanceof Integer
+				|| parameter.getClass().isPrimitive()) {
+			return true;
+		}
+		return false;
+	}
+
 	private static void fillCacheName(Cache cache, Field field, Object parameter) {
 		try {
 			field.setAccessible(true);
